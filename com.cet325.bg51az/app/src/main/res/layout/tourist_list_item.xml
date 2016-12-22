@@ -8,7 +8,8 @@
     <ImageView
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:id="@+id/imageIcon" />
+        android:id="@+id/imageIcon"
+        android:src="@drawable/earthIcon"/>
 
     <TextView
         android:id="@+id/nameTextView"
