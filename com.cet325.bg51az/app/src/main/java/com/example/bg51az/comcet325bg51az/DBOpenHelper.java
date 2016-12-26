@@ -37,18 +37,18 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String KEY_RANK = "rank";
 
     //Columns
-    private static final String[] COLUMNS = {KEY_ID,KEY_NAME,KEY_LOCATION,KEY_DESCRIPTION,KEY_FAVOURITE,KEY_PLANNED,KEY_VISITED,KEY_IMAGE,KEY_GEOLOCATION,KEY_PRICE,KEY_RANK};
+    private static final String[] COLUMNS = {KEY_ID, KEY_NAME, KEY_LOCATION, KEY_DESCRIPTION, KEY_FAVOURITE, KEY_PLANNED, KEY_VISITED, KEY_IMAGE, KEY_GEOLOCATION, KEY_PRICE, KEY_RANK};
 
-    public DBOpenHelper(Context context){
+    public DBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     //Check Text Fields for text length e.g. for Description
     //Image possibly be put in externally?
     @Override
-    public void onCreate(SQLiteDatabase db){
+    public void onCreate(SQLiteDatabase db) {
         //SQL statement to create tourist table
-        String CREATE_TOURIST_TABLE = "CREATE TABLE " + TABLE_TOURIST +" ( " +
+        String CREATE_TOURIST_TABLE = "CREATE TABLE " + TABLE_TOURIST + " ( " +
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 KEY_NAME + " TEXT, " +
                 KEY_LOCATION + " TEXT, " +
@@ -66,7 +66,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Drop older tourist table if already exists
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TOURIST);
 
@@ -77,7 +77,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     //-------------------------------------------
     // CRUD - Create, Read, Update, Delete
 
-    public void addTourist (Tourist tourist){
+    public void addTourist(Tourist tourist) {
         Log.d("addTourist", tourist.toString());
 
         //1. get reference to writable DB
@@ -108,7 +108,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Tourist getTourist(int id){
+    public Tourist getTourist(int id) {
         //1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -117,7 +117,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 TABLE_TOURIST, //a. table
                 COLUMNS, //b. column names
                 " id = ?", //c. selections
-                new String[] {String.valueOf(id)}, //d.  selections args
+                new String[]{String.valueOf(id)}, //d.  selections args
                 null, //e. group by
                 null, //f. having
                 null, //g. order by
@@ -125,7 +125,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
         //3. if results get the first one
         Tourist tourist = null;
-        if(cursor != null && cursor.moveToFirst()){
+        if (cursor != null && cursor.moveToFirst()) {
             //4. build book object
             tourist = new Tourist();
             tourist.id = cursor.getInt(0);
@@ -146,8 +146,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         return tourist;
     }
 
-    public List<Tourist> getAllTourists(){
-        List<Tourist> tourists =  new LinkedList<Tourist>();
+    public List<Tourist> getAllTourists() {
+        List<Tourist> tourists = new LinkedList<Tourist>();
 
         //1. build the query
         String query = "SELECT  * FROM " + TABLE_TOURIST;
@@ -158,8 +158,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
         //3. go over each row, build tracks and add it to list
         Tourist tourist = null;
-        if(cursor != null && cursor.moveToFirst()){
-            do{
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
                 tourist = new Tourist();
                 tourist.id = cursor.getInt(0);
                 tourist.name = cursor.getString(1);
@@ -174,7 +174,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
                 //Add tourist to tourists
                 tourists.add(tourist);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         Log.d("getAllTracks()", tourists.toString());
 
@@ -184,7 +184,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     //Update single tourist
-    public int updateTourist(Tourist tourist){
+    public int updateTourist(Tourist tourist) {
         //1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -205,7 +205,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         int i = db.update(TABLE_TOURIST, //table
                 values, //column/value
                 KEY_ID + " = ?", //selections
-                new String[] {String.valueOf(tourist.id)});//selection args
+                new String[]{String.valueOf(tourist.id)});//selection args
 
         //4. close
         db.close();
@@ -214,7 +214,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     //Delete single tourist
-    public void deleteTourist(Tourist tourist){
+    public void deleteTourist(Tourist tourist) {
         //1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -229,7 +229,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         Log.d("deleteTrack", tourist.toString());
     }
 
-    public Tourist getTouristByName(String name){
+    public Tourist getTouristByName(String name) {
         //1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -238,7 +238,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 db.query(TABLE_TOURIST, //a. table
                         COLUMNS, //b. column names
                         KEY_NAME + " = ?", //c. selections
-                        new String[] {name}, //d. selection args
+                        new String[]{name}, //d. selection args
                         null, //e. group by
                         null, //f. having
                         null, //g. order by
@@ -246,7 +246,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
         //3. if a match was made
         Tourist tourist = null;
-        if(cursor != null && cursor.moveToFirst()){
+        if (cursor != null && cursor.moveToFirst()) {
             //4. build tourist object
             tourist = new Tourist();
             tourist.id = cursor.getInt(0);
@@ -260,7 +260,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             tourist.price = cursor.getDouble(8);
             tourist.rank = cursor.getInt(9);
 
-            Log.d("getName(" +name+ ")", tourist.toString());
+            Log.d("getName(" + name + ")", tourist.toString());
         }
 
         cursor.close();

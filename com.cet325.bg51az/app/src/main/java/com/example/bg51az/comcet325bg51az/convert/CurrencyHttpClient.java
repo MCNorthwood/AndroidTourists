@@ -14,41 +14,46 @@ public class CurrencyHttpClient {
 
     private static String BASE_URL = "http://api.fixer.io/latest?base=GBP";
 
-    public String getCurrencyData(){
+    public String getCurrencyData() {
         HttpURLConnection con = null;
         InputStream iS = null;
 
         try {
-            con = (HttpURLConnection)(new URL(BASE_URL)).openConnection(); //establish connection to API
+            con = (HttpURLConnection) (new URL(BASE_URL)).openConnection(); //establish connection to API
             con.setRequestMethod("GET");
             con.setDoInput(true);
             con.setDoOutput(true);
             con.connect();
 
             int response = con.getResponseCode();
-            if(response == HttpURLConnection.HTTP_OK){ // If there is a response, proceed
+            if (response == HttpURLConnection.HTTP_OK) { // If there is a response, proceed
                 //read response
                 StringBuffer buff = new StringBuffer();
                 iS = con.getInputStream();
                 BufferedReader br = new BufferedReader(new InputStreamReader(iS));
                 String line = null;
-                while((line = br.readLine()) != null){
+                while ((line = br.readLine()) != null) {
                     buff.append(line + "\r\n");
                 }
                 iS.close();
                 con.disconnect();
                 return buff.toString();
-            }
-            else{
+            } else {
                 Log.d("HttpURLConnection", "Failed to connect");
                 return null;
             }
-        }catch(Exception e){
-            e.printStackTrace();;
-        }
-        finally {
-            try{iS.close();}catch (Exception e){}
-            try{con.disconnect();}catch (Exception e){}
+        } catch (Exception e) {
+            e.printStackTrace();
+            ;
+        } finally {
+            try {
+                iS.close();
+            } catch (Exception e) {
+            }
+            try {
+                con.disconnect();
+            } catch (Exception e) {
+            }
         }
 
         return null;
