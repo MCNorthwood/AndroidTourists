@@ -1,13 +1,15 @@
 package com.example.bg51az.comcet325bg51az.convert;
 
-/**
- * Created by MCNorthwood on 23/12/2016.
- */
 public class Currency {//implements Serializable {
     private String base;
     private String date;
+    private double GBP;
     private double EUR;
     private double USD;
+
+    public double convertCurrency(double base, double chosenCurr){
+        return base * chosenCurr;
+    }
 
     public String getBase() {
         return base;
@@ -23,6 +25,9 @@ public class Currency {//implements Serializable {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public double getGBP() { return GBP; }
+    public void setGBP(double GBP) { this.GBP = GBP; }
 
     //gets and set Euro and Dollars as the Base is in GBP
     public double getEUR() {

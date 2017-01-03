@@ -15,6 +15,7 @@ public class CurrencyParser {
 
         // get the rates of each country
         JSONObject rObj = getObject("rates",jObj);
+        curr.setGBP(getDouble("GBP", rObj));
         curr.setEUR(getDouble("EUR", rObj));
         curr.setUSD(getDouble("USD", rObj));
         curr.setAUD(getDouble("AUD", rObj));

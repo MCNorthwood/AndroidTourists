@@ -1,4 +1,4 @@
-package com.example.bg51az.comcet325bg51az;
+package com.example.bg51az.comcet325bg51az.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,9 +10,6 @@ import android.util.Log;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by MCNorthwood on 11/12/2016.
- */
 public class DBOpenHelper extends SQLiteOpenHelper {
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -25,19 +22,18 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     //Tourist Table Columns names
     private static final String KEY_ID = "_id";
-    private static final String KEY_NAME = "name";
-    private static final String KEY_LOCATION = "location";
-    private static final String KEY_DESCRIPTION = "description";
-    private static final String KEY_FAVOURITE = "favourite";
-    private static final String KEY_PLANNED = "planned";
-    private static final String KEY_VISITED = "visited";
-    private static final String KEY_IMAGE = "image";
-    private static final String KEY_GEOLOCATION = "geolocation";
-    private static final String KEY_PRICE = "price";
-    private static final String KEY_RANK = "rank";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_LOCATION = "location";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_FAVOURITE = "favourite";
+    public static final String KEY_IMAGE = "image";
+    public static final String KEY_GEOLOCATION = "geolocation";
+    public static final String KEY_PRICE = "price";
+    public static final String KEY_RANK = "rank";
+    public static final String KEY_DELETABLE = "deletable";
 
     //Columns
-    private static final String[] COLUMNS = {KEY_ID, KEY_NAME, KEY_LOCATION, KEY_DESCRIPTION, KEY_FAVOURITE, KEY_PLANNED, KEY_VISITED, KEY_IMAGE, KEY_GEOLOCATION, KEY_PRICE, KEY_RANK};
+    private static final String[] COLUMNS = {KEY_ID, KEY_NAME, KEY_LOCATION, KEY_DESCRIPTION, KEY_FAVOURITE, KEY_IMAGE, KEY_GEOLOCATION, KEY_PRICE, KEY_RANK, KEY_DELETABLE};
 
     public DBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -53,13 +49,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 KEY_NAME + " TEXT, " +
                 KEY_LOCATION + " TEXT, " +
                 KEY_DESCRIPTION + " TEXT, " +
-                KEY_FAVOURITE + " TEXT, " +
-                KEY_PLANNED + " TEXT, " +
-                KEY_VISITED + " TEXT, " +
+                KEY_FAVOURITE + " INTEGER, " +
                 KEY_IMAGE + " TEXT, " +
                 KEY_GEOLOCATION + " TEXT, " +
-                KEY_PRICE + " DOUBLE, " +
-                KEY_RANK + " INTEGER )";
+                KEY_PRICE + " DOUBLE " + //Is this REAL?
+                KEY_RANK + " INTEGER " +
+                KEY_DELETABLE + "INTEGER )";
 
         //create tourist table
         db.execSQL(CREATE_TOURIST_TABLE);
@@ -92,12 +87,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         values.put(KEY_LOCATION, tourist.location); //get location
         values.put(KEY_DESCRIPTION, tourist.description); //get description
         values.put(KEY_FAVOURITE, tourist.favourite); //get favourite
-        values.put(KEY_PLANNED, tourist.planned); //get planned
-        values.put(KEY_VISITED, tourist.visited); //get visited
         values.put(KEY_IMAGE, tourist.image); //get image
         values.put(KEY_GEOLOCATION, tourist.geolocation); //get geolocation
         values.put(KEY_PRICE, tourist.price); //get price
         values.put(KEY_RANK, tourist.rank); //get rank
+        values.put(KEY_DELETABLE, tourist.rank); //get rank
 
         //3. insert
         db.insert(TABLE_TOURIST, //table
@@ -132,12 +126,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             tourist.name = cursor.getString(1);
             tourist.location = cursor.getString(2);
             tourist.favourite = Boolean.parseBoolean(cursor.getString(3));
-            tourist.planned = cursor.getString(4);
-            tourist.visited = cursor.getString(5);
-            tourist.image = cursor.getString(6);
-            tourist.geolocation = cursor.getString(7);
-            tourist.price = cursor.getDouble(8);
-            tourist.rank = cursor.getInt(9);
+            tourist.image = cursor.getString(4);
+            tourist.geolocation = cursor.getString(5);
+            tourist.price = cursor.getDouble(6);
+            tourist.rank = cursor.getInt(7);
 
             Log.d("getTourist(" + id + ")", tourist.toString());
         }
@@ -165,12 +157,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 tourist.name = cursor.getString(1);
                 tourist.location = cursor.getString(2);
                 tourist.favourite = Boolean.parseBoolean(cursor.getString(3));
-                tourist.planned = cursor.getString(4);
-                tourist.visited = cursor.getString(5);
-                tourist.image = cursor.getString(6);
-                tourist.geolocation = cursor.getString(7);
-                tourist.price = cursor.getDouble(8);
-                tourist.rank = cursor.getInt(9);
+                tourist.image = cursor.getString(4);
+                tourist.geolocation = cursor.getString(5);
+                tourist.price = cursor.getDouble(6);
+                tourist.rank = cursor.getInt(7);
+                tourist.deletable = Boolean.parseBoolean(cursor.getString(8));
 
                 //Add tourist to tourists
                 tourists.add(tourist);
@@ -194,12 +185,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         values.put(KEY_LOCATION, tourist.location); //get location
         values.put(KEY_DESCRIPTION, tourist.description); //get description
         values.put(KEY_FAVOURITE, tourist.favourite); //get favourite
-        values.put(KEY_PLANNED, tourist.planned); //get planned
-        values.put(KEY_VISITED, tourist.visited); //get visited
         values.put(KEY_IMAGE, tourist.image); //get image
         values.put(KEY_GEOLOCATION, tourist.geolocation); //get geolocation
         values.put(KEY_PRICE, tourist.price); //get price
         values.put(KEY_RANK, tourist.rank); //get rank
+        values.put(KEY_DELETABLE, tourist.rank); //get rank
 
         //3. updating row
         int i = db.update(TABLE_TOURIST, //table
@@ -253,12 +243,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             tourist.name = cursor.getString(1);
             tourist.location = cursor.getString(2);
             tourist.favourite = Boolean.parseBoolean(cursor.getString(3));
-            tourist.planned = cursor.getString(4);
-            tourist.visited = cursor.getString(5);
-            tourist.image = cursor.getString(6);
-            tourist.geolocation = cursor.getString(7);
-            tourist.price = cursor.getDouble(8);
-            tourist.rank = cursor.getInt(9);
+            tourist.image = cursor.getString(4);
+            tourist.geolocation = cursor.getString(5);
+            tourist.price = cursor.getDouble(6);
+            tourist.rank = cursor.getInt(7);
+            tourist.deletable = Boolean.parseBoolean(cursor.getString(8));
 
             Log.d("getName(" + name + ")", tourist.toString());
         }
