@@ -9,7 +9,7 @@
         android:layout_width="74dp"
         android:layout_height="74dp"
         android:id="@+id/imageIcon"
-        android:src="@drawable/earthIcon"
+        android:src="@drawable/earth"
         android:layout_marginTop="12dp"/>
 
     <TextView

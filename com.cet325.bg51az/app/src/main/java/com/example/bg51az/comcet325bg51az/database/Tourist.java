@@ -16,7 +16,6 @@ public class Tourist {
 
     }
 
-    //Change images to String ImageName, Object of Bitmap to store image into
     public Tourist(String name, String loc, String des, boolean fav, String im, String geo, double price, int rank, boolean delete) {
         this.name = name;
         this.location = loc;
@@ -40,79 +39,5 @@ public class Tourist {
                 "\nPrice: " + price +
                 "\nRank: " + rank +
                 "\nDeletable: " + deletable);
-    }
-
-    // set
-    public void setName(String pName) {
-        name = pName;
-    }
-
-    public void setLocation(String pLocation) {
-        location = pLocation;
-    }
-
-    public void setDescription(String pDescription) {
-        description = pDescription;
-    }
-
-    public void setFavourite(boolean pFavourite) {
-        favourite = pFavourite;
-    }
-
-    public void setImage(String pImage) {
-        image = pImage;
-    }
-
-    public void setGeolocation(String pGeolocation) {
-        geolocation = pGeolocation;
-    }
-
-    public void setPrice(double pPrice) {
-        price = pPrice;
-    }
-
-    public void setRank(int pRank) {
-        rank = pRank;
-    }
-
-    public void setDeletable(boolean pRank) {
-        deletable = pRank;
-    }
-
-    //get
-    public String getName() {
-        return name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Boolean getFavourite() {
-        return favourite;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public String getGeolocation() {
-        return geolocation;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public boolean getDeletable() {
-        return deletable;
     }
 }

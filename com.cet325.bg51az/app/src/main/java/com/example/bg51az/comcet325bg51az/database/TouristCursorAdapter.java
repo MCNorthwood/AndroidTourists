@@ -22,6 +22,7 @@ public class TouristCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor){
+        //Get the information
         String touristName = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_NAME));
         String touristLocation = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_LOCATION));
         String touristDescription = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_DESCRIPTION));
@@ -30,6 +31,7 @@ public class TouristCursorAdapter extends CursorAdapter {
         String touristPrice = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_PRICE));
         String touristRank = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_RANK));
 
+        // Initialise TextView and ImageView
         TextView nameTextView = (TextView) view.findViewById(R.id.nameTextView);
         TextView locationTextView = (TextView) view.findViewById(R.id.locationTextView);
         TextView descriptionTextView = (TextView) view.findViewById(R.id.descriptionTextView);
@@ -37,6 +39,8 @@ public class TouristCursorAdapter extends CursorAdapter {
         TextView priceTextView = (TextView) view.findViewById(R.id.priceTextView);
         TextView rankTextView = (TextView) view.findViewById(R.id.rankTextView);
         ImageView imageIcon = (ImageView) view.findViewById(R.id.imageIcon);
+
+        // Set the TextView with the information gathered from the db
         nameTextView.setText(touristName);
         locationTextView.setText(touristLocation);
         descriptionTextView.setText(touristDescription);
@@ -44,6 +48,7 @@ public class TouristCursorAdapter extends CursorAdapter {
         priceTextView.setText(touristPrice);
         rankTextView.setText(touristRank);
 
+        // How to set the ImageView
         int id = context.getResources().getIdentifier(touristImage, null, context.getPackageName());
         imageIcon.setImageResource(id);
     }
