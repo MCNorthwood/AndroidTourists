@@ -16,8 +16,7 @@ public class TouristCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup){
-        return LayoutInflater.from(context).inflate(
-                R.layout.tourist_list_item,viewGroup,false);
+        return LayoutInflater.from(context).inflate(R.layout.tourist_list_item,viewGroup,false);
     }
 
     @Override
@@ -45,8 +44,8 @@ public class TouristCursorAdapter extends CursorAdapter {
         locationTextView.setText(touristLocation);
         descriptionTextView.setText(touristDescription);
         geolocationTextView.setText(touristGeolocation);
-        priceTextView.setText(touristPrice);
-        rankTextView.setText(touristRank);
+        priceTextView.setText("£" + touristPrice);
+        rankTextView.setText("Rank: " + touristRank);
 
         // How to set the ImageView
         int id = context.getResources().getIdentifier(touristImage, null, context.getPackageName());
