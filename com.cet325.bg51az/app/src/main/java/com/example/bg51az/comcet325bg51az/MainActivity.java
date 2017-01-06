@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.bg51az.comcet325bg51az.database.DBOpenHelper;
 import com.example.bg51az.comcet325bg51az.database.Tourist;
@@ -186,10 +187,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db.addTourist(LondonEye);
         db.addTourist(LondonZoo);
         db.addTourist(MadameTussauds);
-        /*db.addTourist(NationalGallery);
+        db.addTourist(NationalGallery);
         db.addTourist(NationalHistoryMuseum);
         db.addTourist(ScienceMuseum);
         db.addTourist(TowerBridge);
-        db.addTourist(TowerOfLondon);*/
+        db.addTourist(TowerOfLondon);
+
+        Toast.makeText(this, "Data added to Database", Toast.LENGTH_LONG).show();
     }
 }
