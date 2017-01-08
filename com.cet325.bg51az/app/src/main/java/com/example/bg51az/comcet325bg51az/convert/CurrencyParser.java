@@ -10,43 +10,45 @@ public class CurrencyParser {
         // create a JSON object from the data provided
         JSONObject jObj = new JSONObject(data);
 
-        curr.setBase(getString("base", jObj));
-        curr.setDate(getString("date", jObj));
+        curr.base =  jObj.getString("base");
+        curr.date = jObj.getString("date");
 
         // get the rates of each country
         JSONObject rObj = getObject("rates",jObj);
-        curr.setGBP(getDouble("GBP", rObj));
-        curr.setEUR(getDouble("EUR", rObj));
-        curr.setUSD(getDouble("USD", rObj));
-        curr.setAUD(getDouble("AUD", rObj));
-        curr.setBGN(getDouble("BGN", rObj));
-        curr.setBRL(getDouble("BRL", rObj));
-        curr.setCAD(getDouble("CAD", rObj));
-        curr.setCHF(getDouble("CHF", rObj));
-        curr.setCNY(getDouble("CNY", rObj));
-        curr.setCZK(getDouble("CZK", rObj));
-        curr.setDKK(getDouble("DKK", rObj));
-        curr.setHKD(getDouble("HKD", rObj));
-        curr.setHRK(getDouble("HRK", rObj));
-        curr.setHUF(getDouble("HUF", rObj));
-        curr.setIDR(getDouble("IDR", rObj));
-        curr.setILS(getDouble("ILS", rObj));
-        curr.setINR(getDouble("INR", rObj));
-        curr.setJPY(getDouble("JPY", rObj));
-        curr.setKRW(getDouble("KRW", rObj));
-        curr.setMXN(getDouble("MXN", rObj));
-        curr.setMYR(getDouble("MYR", rObj));
-        curr.setNOK(getDouble("NOK", rObj));
-        curr.setNZD(getDouble("NZD", rObj));
-        curr.setPHP(getDouble("PHP", rObj));
-        curr.setPLN(getDouble("PLN", rObj));
-        curr.setRON(getDouble("RON", rObj));
-        curr.setRUB(getDouble("RUB", rObj));
-        curr.setSEK(getDouble("SEK", rObj));
-        curr.setSGD(getDouble("SGD", rObj));
-        curr.setTHB(getDouble("THB", rObj));
-        curr.setTRY(getDouble("TRY", rObj));
-        curr.setZAR(getDouble("ZAR", rObj));
+        //if(curr.base != "GBP") {
+            curr.GBP = rObj.getDouble("GBP");
+        //}
+        //curr.EUR = rObj.getDouble("EUR");
+        curr.USD = rObj.getDouble("USD");
+        curr.AUD = rObj.getDouble("AUD");
+        curr.BGN = rObj.getDouble("BGN");
+        curr.BRL = rObj.getDouble("BRL");
+        curr.CAD = rObj.getDouble("CAD");
+        curr.CHF = rObj.getDouble("CHF");
+        curr.CNY = rObj.getDouble("CNY");
+        curr.CZK = rObj.getDouble("CZK");
+        curr.DKK = rObj.getDouble("DKK");
+        curr.HKD = rObj.getDouble("HKD");
+        curr.HRK = rObj.getDouble("HRK");
+        curr.HUF = rObj.getDouble("HUF");
+        curr.IDR = rObj.getDouble("IDR");
+        curr.ILS = rObj.getDouble("ILS");
+        curr.INR = rObj.getDouble("INR");
+        curr.JPY = rObj.getDouble("JPY");
+        curr.KRW = rObj.getDouble("KRW");
+        curr.MXN = rObj.getDouble("MXN");
+        curr.MYR = rObj.getDouble("MYR");
+        curr.NOK = rObj.getDouble("NOK");
+        curr.NZD = rObj.getDouble("NZD");
+        curr.PHP = rObj.getDouble("PHP");
+        curr.PLN = rObj.getDouble("PLN");
+        curr.RON = rObj.getDouble("RON");
+        curr.RUB = rObj.getDouble("RUB");
+        curr.SEK = rObj.getDouble("SEK");
+        curr.SGD = rObj.getDouble("SGD");
+        curr.THB = rObj.getDouble("THB");
+        curr.TRY = rObj.getDouble("TRY");
+        curr.ZAR = rObj.getDouble("ZAR");
 
         return curr;
     }
@@ -54,13 +56,5 @@ public class CurrencyParser {
     private static JSONObject getObject(String name, JSONObject Obj) throws JSONException{
         JSONObject subObj = Obj.getJSONObject(name);
         return  subObj;
-    }
-
-    private static String getString(String name, JSONObject Obj) throws JSONException{
-        return Obj.getString(name);
-    }
-
-    private static double getDouble(String name, JSONObject Obj) throws JSONException{
-        return Obj.getDouble(name);
     }
 }

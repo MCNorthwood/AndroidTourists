@@ -48,7 +48,7 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
                 AlertDialog.Builder alertDB = new AlertDialog.Builder(ListActivity.this);
                 alertDB.setView(getEmpIdView);
 
-                alertDB.setCancelable(true)
+                alertDB.setCancelable(false)
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

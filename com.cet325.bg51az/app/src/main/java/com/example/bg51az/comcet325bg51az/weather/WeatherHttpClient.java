@@ -23,9 +23,10 @@ public class WeatherHttpClient {
 
         try {
             //create URL for specified city, metric units and 7 lines to return
-            urlString = BASE_URL + URLEncoder.encode(location, "UTF-8") + "&units=metric&cnt=7&APPID=" + API_KEY;
+            urlString = BASE_URL + URLEncoder.encode(location, "UTF-8") + "&units=metric&APPID=" + API_KEY;
             Log.d("urlString", urlString);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
 

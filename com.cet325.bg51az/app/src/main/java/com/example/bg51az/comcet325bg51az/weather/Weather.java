@@ -8,6 +8,8 @@ public class Weather {
     public Clouds clouds = new Clouds();
     public Rain rain = new Rain();
 
+    public byte[] iconData;
+
     public class WeatherCondition {
         private String dt;
         private int weatherId;
@@ -21,7 +23,6 @@ public class Weather {
         public String getDt() {
             return dt;
         }
-
         public void setDt(String DT) {
             this.dt = DT;
         }
@@ -29,7 +30,6 @@ public class Weather {
         public int getWeatherId() {
             return weatherId;
         }
-
         public void setWeatherId(int weatherId) {
             this.weatherId = weatherId;
         }
@@ -37,7 +37,6 @@ public class Weather {
         public String getMain() {
             return main;
         }
-
         public void setMain(String main) {
             this.main = main;
         }
@@ -45,7 +44,6 @@ public class Weather {
         public String getDesc() {
             return desc;
         }
-
         public void setDesc(String desc) {
             this.desc = desc;
         }
@@ -53,7 +51,6 @@ public class Weather {
         public String getIcon() {
             return icon;
         }
-
         public void setIcon(String icon) {
             this.icon = icon;
         }
@@ -61,7 +58,6 @@ public class Weather {
         public float getPressure() {
             return pressure;
         }
-
         public void setPressure(float pressure) {
             this.pressure = pressure;
         }
@@ -69,7 +65,6 @@ public class Weather {
         public float getHumidity() {
             return humidity;
         }
-
         public void setHumidity(float humidity) {
             this.humidity = humidity;
         }
@@ -83,7 +78,6 @@ public class Weather {
         public float getMinTemp() {
             return minTemp;
         }
-
         public void setMinTemp(float minTemp) {
             this.minTemp = minTemp;
         }
@@ -91,7 +85,6 @@ public class Weather {
         public float getMaxTemp() {
             return maxTemp;
         }
-
         public void setMaxTemp(float maxTemp) {
             this.maxTemp = maxTemp;
         }
@@ -99,7 +92,6 @@ public class Weather {
         public float getTemp() {
             return temp;
         }
-
         public void setTemp(float tempDay) {
             this.temp = tempDay;
         }
@@ -112,7 +104,6 @@ public class Weather {
         public float getSpeed() {
             return speed;
         }
-
         public void setSpeed(float speed) {
             this.speed = speed;
         }
@@ -120,7 +111,6 @@ public class Weather {
         public float getDeg() {
             return deg;
         }
-
         public void setDeg(float deg) {
             this.deg = deg;
         }
@@ -132,7 +122,6 @@ public class Weather {
         public int getPerc() {
             return perc;
         }
-
         public void setPerc(int perc) {
             this.perc = perc;
         }

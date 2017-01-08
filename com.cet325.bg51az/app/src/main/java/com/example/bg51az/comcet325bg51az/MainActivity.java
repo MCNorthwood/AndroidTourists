@@ -1,20 +1,26 @@
 package com.example.bg51az.comcet325bg51az;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.bg51az.comcet325bg51az.convert.Currency;
+import com.example.bg51az.comcet325bg51az.convert.CurrencyHttpClient;
+import com.example.bg51az.comcet325bg51az.convert.CurrencyParser;
 import com.example.bg51az.comcet325bg51az.database.DBOpenHelper;
 import com.example.bg51az.comcet325bg51az.database.Tourist;
+
+import org.json.JSONException;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnViewList, btnFavCurr, btnAbout;
+    Button btnViewList, btnWeather, btnCurrency, btnAbout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +28,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         btnViewList = (Button)findViewById(R.id.btn_viewList);
-        btnFavCurr = (Button)findViewById(R.id.btn_favCurr);
+        btnWeather = (Button)findViewById(R.id.btn_weather);
+        btnCurrency = (Button)findViewById(R.id.btn_currency);
         btnAbout = (Button)findViewById(R.id.btn_about);
 
         btnViewList.setOnClickListener(this);
-        btnFavCurr.setOnClickListener(this);
+        btnWeather.setOnClickListener(this);
+        btnCurrency.setOnClickListener(this);
         btnAbout.setOnClickListener(this);
 
         Initiate();
@@ -40,11 +48,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent inList = new Intent(v.getContext(), ListActivity.class);
             startActivity(inList);
         }
-        else if(id == R.id.btn_favCurr){
-
+        else if(id == R.id.btn_weather){
+            Intent inWeather = new Intent(v.getContext(), WeatherActivity.class);
+            startActivity(inWeather);
+        }
+        else if(id == R.id.btn_currency){
+            Intent inCurrency = new Intent(v.getContext(), CurrencyActivity.class);
+            startActivity(inCurrency);
         }
         else if(id == R.id.btn_about){
-
+            /*Intent inAbout = new Intent(v.getContext(), About.class);
+            startActivity(inAbout);*/
         }
         else{
 
@@ -193,6 +207,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db.addTourist(TowerBridge);
         db.addTourist(TowerOfLondon);
 
-        Toast.makeText(this, "Data added to Database", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Data Loaded", Toast.LENGTH_LONG).show();
+
+        JSONCurrencyTask task = new JSONCurrencyTask();
+        task.execute();
+
+        //Toast.makeText(this, "Currency Exchange loaded", Toast.LENGTH_LONG).show();
+    }
+
+    private class JSONCurrencyTask extends AsyncTask<String, Void, Currency>{
+        @Override
+        protected Currency doInBackground(String... params){
+           // Log.d("data", params);
+            Currency currency = new Currency();
+            String data = ((new CurrencyHttpClient()).getCurrencyData());
+            if(data == null){
+                return null;
+            } else {
+                try{
+                    currency = CurrencyParser.getCurrency(data);
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+                return currency;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Currency currency){
+            super.onPostExecute(currency);
+            if(currency != null){
+
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "Unable to retrieve data", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
