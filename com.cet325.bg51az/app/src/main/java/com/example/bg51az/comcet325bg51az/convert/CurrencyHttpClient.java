@@ -21,7 +21,7 @@ public class CurrencyHttpClient {
 
         try
         {
-            urlString = BASE_URL + URLEncoder.encode(END_URL, "UTF-8");// + "?base=GBP";
+            urlString = BASE_URL + URLEncoder.encode(END_URL, "UTF-8") + "?base=GBP";
             Log.d("urlString", urlString);
         }
         catch (Exception e){

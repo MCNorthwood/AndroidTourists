@@ -13,13 +13,17 @@ public class CurrencyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_currency);
+        setContentView(R.layout.tourist_list_add);
 
         Currency curr = new Currency();
 
         currency = (TextView)findViewById(R.id.currency);
 
-        currency.setText(curr.GBP+ " " + curr.USD);
+        double convert = curr.convertCurrency(10, curr.getUSD());
+
+        String convertDouble = String.valueOf(convert);
+
+        currency.setText(curr.getBase() + " " + curr.getDate());
     }
 
 

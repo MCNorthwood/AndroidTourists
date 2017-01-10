@@ -21,10 +21,11 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_space">
 
             <Button
-                android:layout_width="74dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_viewList"
                 android:id="@+id/btn_viewList" />
@@ -34,12 +35,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/btn_weather"
                 android:id="@+id/btn_weather" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_currency"
-                android:id="@+id/btn_currency" />
 
             <Button
                 android:layout_width="wrap_content"

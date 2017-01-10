@@ -11,7 +11,6 @@ public class Weather {
     public byte[] iconData;
 
     public class WeatherCondition {
-        private String dt;
         private int weatherId;
         private String main;
         private String desc;
@@ -19,13 +18,6 @@ public class Weather {
 
         private float pressure;
         private float humidity;
-
-        public String getDt() {
-            return dt;
-        }
-        public void setDt(String DT) {
-            this.dt = DT;
-        }
 
         public int getWeatherId() {
             return weatherId;

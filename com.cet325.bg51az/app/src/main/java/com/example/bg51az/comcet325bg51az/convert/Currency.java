@@ -1,47 +1,46 @@
 package com.example.bg51az.comcet325bg51az.convert;
 
 public class Currency {//implements Serializable {
-    public String base;
-    public String date;
-    public double GBP;
-    public double EUR;
-    public double USD;
-    public double AUD; // Australian Dollar
-    public double BGN; // Bulgarian Lev
-    public double BRL; // Brazilian Real
-    public double CAD; // Canadian Dollar
-    public double CHF; // Swiss Franc
-    public double CNY; // Chinese Yuan
-    public double CZK; // Czech Koruna
-    public double DKK; // Danish Krone
-    public double HKD; // Hong Kong Dollar
-    public double HRK; // Croatian Kuna
-    public double HUF; // Hungarian Forint
-    public double IDR; // Indonesian Rupiah
-    public double ILS; // Israeli Shekel
-    public double INR; // Indian Rupee
-    public double JPY; // Japanese Yen
-    public double KRW; // Korean Won
-    public double MXN; // Mexican Peso
-    public double MYR; // Malaysian Ringgit
-    public double NOK; // Norwegian Krone
-    public double NZD; // New Zealand Dollar
-    public double PHP; // Philippine Peso
-    public double PLN; // Polish Zloty
-    public double RON; // Romanian New Leu
-    public double RUB; // Russian Rouble
-    public double SEK; // Swedish Krona
-    public double SGD; // Singapore Dollar
-    public double THB; // Thai Baht
-    public double TRY; // Turkish Lira
-    public double ZAR; // South African Rand
+    private String base;
+    private String date;
+    private double GBP;
+    private double EUR;
+    private double USD;
+    private double AUD; // Australian Dollar
+    private double BGN; // Bulgarian Lev
+    private double BRL; // Brazilian Real
+    private double CAD; // Canadian Dollar
+    private double CHF; // Swiss Franc
+    private double CNY; // Chinese Yuan
+    private double CZK; // Czech Koruna
+    private double DKK; // Danish Krone
+    private double HKD; // Hong Kong Dollar
+    private double HRK; // Croatian Kuna
+    private double HUF; // Hungarian Forint
+    private double IDR; // Indonesian Rupiah
+    private double ILS; // Israeli Shekel
+    private double INR; // Indian Rupee
+    private double JPY; // Japanese Yen
+    private double KRW; // Korean Won
+    private double MXN; // Mexican Peso
+    private double MYR; // Malaysian Ringgit
+    private double NOK; // Norwegian Krone
+    private double NZD; // New Zealand Dollar
+    private double PHP; // Philippine Peso
+    private double PLN; // Polish Zloty
+    private double RON; // Romanian New Leu
+    private double RUB; // Russian Rouble
+    private double SEK; // Swedish Krona
+    private double SGD; // Singapore Dollar
+    private double THB; // Thai Baht
+    private double TRY; // Turkish Lira
+    private double ZAR; // South African Rand
 
     public double convertCurrency(double base, double exchange){
         return base * exchange;
     }
-    public double convertFavourite(double base, double fav) { return base * fav; }
 
-    /*public String getBase() {
+    public String getBase() {
         return base;
     }
     public void setBase(String base) {
@@ -275,5 +274,5 @@ public class Currency {//implements Serializable {
     }
     public void setZAR(double ZAR) {
         this.ZAR = ZAR;
-    } */
+    }
 }

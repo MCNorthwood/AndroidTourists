@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bg51az.comcet325bg51az.convert.Currency;
@@ -20,8 +21,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnViewList, btnWeather, btnCurrency, btnAbout;
+    Button btnViewList, btnWeather, btnAbout;
 
+    TextView test;
+
+    Currency currency = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,15 +33,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnViewList = (Button)findViewById(R.id.btn_viewList);
         btnWeather = (Button)findViewById(R.id.btn_weather);
-        btnCurrency = (Button)findViewById(R.id.btn_currency);
         btnAbout = (Button)findViewById(R.id.btn_about);
 
         btnViewList.setOnClickListener(this);
         btnWeather.setOnClickListener(this);
-        btnCurrency.setOnClickListener(this);
         btnAbout.setOnClickListener(this);
 
         Initiate();
+
+        //test.setText(currency.getBase() + " " + currency.getDate() + " " + currency.getEUR() + " " + currency.getUSD() + " " + currency.convertCurrency(10, currency.getEUR()));
     }
 
     @Override
@@ -51,10 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(id == R.id.btn_weather){
             Intent inWeather = new Intent(v.getContext(), WeatherActivity.class);
             startActivity(inWeather);
-        }
-        else if(id == R.id.btn_currency){
-            Intent inCurrency = new Intent(v.getContext(), CurrencyActivity.class);
-            startActivity(inCurrency);
         }
         else if(id == R.id.btn_about){
             /*Intent inAbout = new Intent(v.getContext(), About.class);
@@ -209,8 +209,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Toast.makeText(this, "Data Loaded", Toast.LENGTH_LONG).show();
 
-        JSONCurrencyTask task = new JSONCurrencyTask();
-        task.execute();
+        /*JSONCurrencyTask task = new JSONCurrencyTask();
+        task.execute();*/
 
         //Toast.makeText(this, "Currency Exchange loaded", Toast.LENGTH_LONG).show();
     }
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected Currency doInBackground(String... params){
            // Log.d("data", params);
-            Currency currency = new Currency();
+            currency = new Currency();
             String data = ((new CurrencyHttpClient()).getCurrencyData());
             if(data == null){
                 return null;

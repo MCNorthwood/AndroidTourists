@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/addTourist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/add_tourist"
+        android:textSize="@dimen/text_size_header" />
+
+    <EditText
+        android:id="@+id/editInputTouristName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/nameInput"/>
+
+    <EditText
+        android:id="@+id/editInputTouristLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/locationInput"/>
+
+    <EditText
+        android:id="@+id/editInputTouristDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/descriptionInput"/>
+
+    <EditText
+        android:id="@+id/editInputTouristPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/priceInput"/>
+
+    <EditText
+        android:id="@+id/editInputTouristRank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/rankInput"/>
+
+    <EditText
+        android:id="@+id/editInputTouristNotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/notesInput"/>
+
+</LinearLayout>
