@@ -6,9 +6,9 @@ import android.widget.TextView;
 
 import com.example.bg51az.comcet325bg51az.convert.Currency;
 
-public class CurrencyActivity extends AppCompatActivity {
+public class CurrencyActivity { //} extends AppCompatActivity {
 
-    TextView currency;
+  /*  TextView currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class CurrencyActivity extends AppCompatActivity {
         String convertDouble = String.valueOf(convert);
 
         currency.setText(curr.getBase() + " " + curr.getDate());
-    }
+    }*/
 
 
 }

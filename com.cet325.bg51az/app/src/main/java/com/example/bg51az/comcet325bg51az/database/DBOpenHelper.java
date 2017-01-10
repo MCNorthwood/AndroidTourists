@@ -126,12 +126,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             tourist.name = cursor.getString(1);
             tourist.location = cursor.getString(2);
             tourist.description = cursor.getString(3);
-            tourist.favourite = Boolean.parseBoolean(cursor.getString(4));
+            tourist.favourite = (cursor.getInt(cursor.getColumnIndex(KEY_FAVOURITE)) == 1);
             tourist.image = cursor.getString(5);
-            tourist.geolocation = cursor.getString(5);
+            tourist.geolocation = cursor.getString(6);
             tourist.price = cursor.getDouble(7);
             tourist.rank = cursor.getInt(8);
-            tourist.deletable = Boolean.parseBoolean(cursor.getString(9));
+            tourist.deletable = (cursor.getInt(cursor.getColumnIndex(KEY_DELETABLE)) == 1);
 
             Log.d("getTourist(" + id + ")", tourist.toString());
         }
@@ -159,12 +159,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                 tourist.name = cursor.getString(1);
                 tourist.location = cursor.getString(2);
                 tourist.description = cursor.getString(3);
-                tourist.favourite = Boolean.parseBoolean(cursor.getString(4));
+                tourist.favourite = (cursor.getInt(cursor.getColumnIndex(KEY_FAVOURITE)) == 1);
                 tourist.image = cursor.getString(5);
-                tourist.geolocation = cursor.getString(5);
+                tourist.geolocation = cursor.getString(6);
                 tourist.price = cursor.getDouble(7);
                 tourist.rank = cursor.getInt(8);
-                tourist.deletable = Boolean.parseBoolean(cursor.getString(9));
+                tourist.deletable = (cursor.getInt(cursor.getColumnIndex(KEY_DELETABLE)) == 1);
 
                 //Add tourist to tourists
                 tourists.add(tourist);
@@ -246,12 +246,12 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             tourist.name = cursor.getString(1);
             tourist.location = cursor.getString(2);
             tourist.description = cursor.getString(3);
-            tourist.favourite = Boolean.parseBoolean(cursor.getString(4));
+            tourist.favourite = (cursor.getInt(cursor.getColumnIndex(KEY_FAVOURITE)) == 1);
             tourist.image = cursor.getString(5);
-            tourist.geolocation = cursor.getString(5);
+            tourist.geolocation = cursor.getString(6);
             tourist.price = cursor.getDouble(7);
             tourist.rank = cursor.getInt(8);
-            tourist.deletable = Boolean.parseBoolean(cursor.getString(9));
+            tourist.deletable = (cursor.getInt(cursor.getColumnIndex(KEY_DELETABLE)) == 1);
 
             Log.d("getName(" + name + ")", tourist.toString());
         }

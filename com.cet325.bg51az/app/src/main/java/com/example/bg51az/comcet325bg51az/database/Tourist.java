@@ -34,10 +34,10 @@ public class Tourist {
                 "\nLocation: " + location +
                 "\nDescription: " + description +
                 "\nFavourite: " + favourite +
-                "\nImage: " + image +
+                //"\nImage: " + image +
                 "\nGeoLocation: " + geolocation +
                 "\nPrice: " + price +
-                "\nRank: " + rank +
-                "\nDeletable: " + deletable);
+                "\nRank: " + rank ); /*+
+                "\nDeletable: " + deletable);*/
     }
 }

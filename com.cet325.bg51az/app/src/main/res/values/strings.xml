@@ -8,7 +8,8 @@
 
     <string name="fav_Currency">Favourite Currency</string>
     <string name="delete_location">Delete Location</string>
-    <string name="add_tourist">Add Tourist Location</string>
+    <string name="add_tourist">Add Tourist Information</string>
+    <string name="update_tourist">Update Tourist Information</string>
 
     <string name="pressure">Pressure</string>
     <string name="humidity">Humidity</string>
@@ -23,6 +24,8 @@
     <string name="nameInput">Tourist Name:</string>
     <string name="locationInput">Tourist Location:</string>
     <string name="descriptionInput">Tourist Description:</string>
+    <string name="latitudeInput">"Tourist Latitude:     "</string>
+    <string name="longitudeInput">Tourist Longitude:</string>
     <string name="favouriteInput">Tourist Favourite:</string>
     <string name="priceInput">Tourist Price:</string>
     <string name="rankInput">Tourist Rank:</string>

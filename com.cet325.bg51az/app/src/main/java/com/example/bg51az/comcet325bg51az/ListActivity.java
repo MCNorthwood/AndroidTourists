@@ -1,46 +1,41 @@
 package com.example.bg51az.comcet325bg51az;
 
 import android.app.AlertDialog;
-import android.content.CursorLoader;
 import android.content.DialogInterface;
-import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.LoaderManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bg51az.comcet325bg51az.database.DBOpenHelper;
 import com.example.bg51az.comcet325bg51az.database.Tourist;
 import com.example.bg51az.comcet325bg51az.database.TouristCursorAdapter;
 
-public class ListActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-    private CursorAdapter cursorAdapter = null;
-    Uri uri;
+public class ListActivity extends AppCompatActivity {
+    //private CursorAdapter cursorAdapter = null;
+    DBOpenHelper dbOpenHelper = new DBOpenHelper(this);
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_tourists);
 
-        cursorAdapter = new TouristCursorAdapter(this, null, 0);
+        //cursorAdapter = new TouristCursorAdapter(this, null, 0);
 
         // Get ListView to populate
-        ListView list = (ListView)findViewById(android.R.id.list);
+        final ListView list = (ListView)findViewById(android.R.id.list);
 
         listPopulate(list);
 
         list.setLongClickable(true);
-
-        getLoaderManager().initLoader(0,null, this);
 
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,65 +59,107 @@ public class ListActivity extends AppCompatActivity implements LoaderManager.Loa
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                insertTourist(nameInput.getText().toString(), locationInput.getText().toString(), descriptionInput.getText().toString(),priceInput.getText().toString(),rankInput.getText().toString(), notesInput.getText().toString());
-                                restartLoader();
+                                insertTourist(nameInput.getText().toString(),
+                                        locationInput.getText().toString(),
+                                        descriptionInput.getText().toString(),
+                                        priceInput.getText().toString(),
+                                        rankInput.getText().toString(),
+                                        notesInput.getText().toString());
+                                listPopulate(list);
                             }
                         }).create().show();
             }
         });
 
+        //list.setOnClickListener(new AdapterView.OnClickListener());
+
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
             @Override
             public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id){
                 LayoutInflater layIn = LayoutInflater.from(ListActivity.this);
-                View getEmpIdView = layIn.inflate(R.layout.dialog_get_tourist_info, null);
+                View getEmpIdView = layIn.inflate(R.layout.dialog_delete_tourist_info, null);
 
                 // Pop up layout
-                AlertDialog.Builder alertDB = new AlertDialog.Builder(ListActivity.this);
+                final AlertDialog.Builder alertDB = new AlertDialog.Builder(ListActivity.this);
                 alertDB.setView(getEmpIdView);
 
-                alertDB.setCancelable(false)
-                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                final TextView touristString = (TextView)getEmpIdView.findViewById(R.id.txtTouristString);
+                touristString.setText(getTouristInfo(Long.toString(parent.getItemIdAtPosition(position))));
+
+                alertDB.setCancelable(true)
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                restartLoader();
+                                deleteTourist(Long.toString(parent.getItemIdAtPosition(position)));
                             }
                         }).create().show();
-                restartLoader();
+                listPopulate(list);
                 return true;
             }
         });
     }
 
     private void insertTourist(String name, String location, String description, String price, String rank, String notes){
-        DBOpenHelper dbOpenHelper = new DBOpenHelper(this);
-
-        dbOpenHelper.addTourist(new Tourist(name, location, description, false, "@drawable/earth", "0,0", Double.parseDouble(price), Integer.parseInt(rank), true));
+        try {
+            dbOpenHelper.addTourist(new Tourist
+                    (name,
+                            location,
+                            description,
+                            false,
+                            "@drawable/earth",
+                            "0,0",
+                            Double.parseDouble(price),
+                            Integer.parseInt(rank),
+                            true));
+            Toast.makeText(getApplicationContext(),"Insert Successful", Toast.LENGTH_LONG).show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Failed to add new Tourist Location", Toast.LENGTH_LONG).show();
+        }
     }
 
-    private void restartLoader() { getLoaderManager().restartLoader(0,null, this); }
+    private void deleteTourist(String _id){
+        Tourist tourist = getTourist(_id);
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
-        return new CursorLoader(this, uri, null, null, null, null);
+        if(tourist.deletable){
+            try{
+                Toast.makeText(getApplicationContext(),"Deleting " + tourist.name, Toast.LENGTH_SHORT).show();
+                dbOpenHelper.deleteTourist(tourist);
+                Toast.makeText(getApplicationContext(),"Delete Successful", Toast.LENGTH_LONG).show();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Failed to delete", Toast.LENGTH_LONG).show();
+            }
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "This item is not deletable", Toast.LENGTH_LONG).show();
+        }
     }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor){
-        cursorAdapter.swapCursor(cursor);
+    private String getTouristInfo (String _id){
+        int id = Integer.parseInt(_id);
+
+        Tourist tourist = dbOpenHelper.getTourist(id);
+        return tourist.toString();
     }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) { cursorAdapter.swapCursor(null); }
+    private Tourist getTourist (String _id){
+        int id = Integer.parseInt(_id);
 
-    void listPopulate(ListView list){
+        Tourist tourist = dbOpenHelper.getTourist(id);
+        return tourist;
+    }
+
+    private void listPopulate(ListView list){
         // SQLiteOpenHelper class connecting SQLite
         DBOpenHelper databaseHelper = new DBOpenHelper(this);
 
         // Get access to underlying writable database
         SQLiteDatabase database = databaseHelper.getWritableDatabase();
 
-        //Query for items from teh database and get a cursor back
+        //Query for items from the database and get a cursor back
         Cursor cursorTODO = database.rawQuery("SELECT * FROM tourist", null);
 
         // Setup cursor adapter using cursor from last step

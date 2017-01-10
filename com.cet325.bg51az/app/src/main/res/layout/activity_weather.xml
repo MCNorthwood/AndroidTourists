@@ -143,7 +143,7 @@
         android:layout_centerHorizontal="true"
         android:inputType="text"
         android:lines="1"
-        android:hint="@string/city"
+        android:hint="@string/country"
         android:layout_marginTop="@dimen/margin_space" />
 
     <Button
