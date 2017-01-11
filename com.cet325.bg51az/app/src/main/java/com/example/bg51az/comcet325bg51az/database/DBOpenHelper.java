@@ -10,7 +10,8 @@ import android.util.Log;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DBOpenHelper extends SQLiteOpenHelper {
+public class DBOpenHelper extends SQLiteOpenHelper
+{
     // Database Version
     private static final int DATABASE_VERSION = 3;
     //Database Name
@@ -102,7 +103,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Tourist getTourist(int id) {
+    public Tourist getTourist(int id)
+    {
         //1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -119,19 +121,20 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
         //3. if results get the first one
         Tourist tourist = null;
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst())
+        {
             //4. build book object
             tourist = new Tourist();
             tourist.id = cursor.getInt(0);
             tourist.name = cursor.getString(1);
             tourist.location = cursor.getString(2);
             tourist.description = cursor.getString(3);
-            tourist.favourite = Boolean.parseBoolean(cursor.getString(4));
+            tourist.favourite = (cursor.getInt(cursor.getColumnIndex(KEY_FAVOURITE)) == 1);
             tourist.image = cursor.getString(5);
-            tourist.geolocation = cursor.getString(5);
+            tourist.geolocation = cursor.getString(6);
             tourist.price = cursor.getDouble(7);
             tourist.rank = cursor.getInt(8);
-            tourist.deletable = Boolean.parseBoolean(cursor.getString(9));
+            tourist.deletable = (cursor.getInt(cursor.getColumnIndex(KEY_DELETABLE)) == 1);
 
             Log.d("getTourist(" + id + ")", tourist.toString());
         }
@@ -140,7 +143,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         return tourist;
     }
 
-    public List<Tourist> getAllTourists() {
+    public List<Tourist> getAllTourists()
+    {
         List<Tourist> tourists = new LinkedList<Tourist>();
 
         //1. build the query
@@ -152,19 +156,21 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
         //3. go over each row, build tracks and add it to list
         Tourist tourist = null;
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
+        if (cursor != null && cursor.moveToFirst())
+        {
+            do
+            {
                 tourist = new Tourist();
                 tourist.id = cursor.getInt(0);
                 tourist.name = cursor.getString(1);
                 tourist.location = cursor.getString(2);
                 tourist.description = cursor.getString(3);
-                tourist.favourite = Boolean.parseBoolean(cursor.getString(4));
+                tourist.favourite = (cursor.getInt(cursor.getColumnIndex(KEY_FAVOURITE)) == 1);
                 tourist.image = cursor.getString(5);
-                tourist.geolocation = cursor.getString(5);
+                tourist.geolocation = cursor.getString(6);
                 tourist.price = cursor.getDouble(7);
                 tourist.rank = cursor.getInt(8);
-                tourist.deletable = Boolean.parseBoolean(cursor.getString(9));
+                tourist.deletable = (cursor.getInt(cursor.getColumnIndex(KEY_DELETABLE)) == 1);
 
                 //Add tourist to tourists
                 tourists.add(tourist);
@@ -178,7 +184,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     //Update single tourist
-    public int updateTourist(Tourist tourist) {
+    public int updateTourist(Tourist tourist)
+    {
         //1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -207,7 +214,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     //Delete single tourist
-    public void deleteTourist(Tourist tourist) {
+    public void deleteTourist(Tourist tourist)
+    {
         //1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -222,7 +230,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         Log.d("deleteTrack", tourist.toString());
     }
 
-    public Tourist getTouristByName(String name) {
+    public Tourist getTouristByName(String name)
+    {
         //1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -239,19 +248,20 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
         //3. if a match was made
         Tourist tourist = null;
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst())
+        {
             //4. build tourist object
             tourist = new Tourist();
             tourist.id = cursor.getInt(0);
             tourist.name = cursor.getString(1);
             tourist.location = cursor.getString(2);
             tourist.description = cursor.getString(3);
-            tourist.favourite = Boolean.parseBoolean(cursor.getString(4));
+            tourist.favourite = (cursor.getInt(cursor.getColumnIndex(KEY_FAVOURITE)) == 1);
             tourist.image = cursor.getString(5);
-            tourist.geolocation = cursor.getString(5);
+            tourist.geolocation = cursor.getString(6);
             tourist.price = cursor.getDouble(7);
             tourist.rank = cursor.getInt(8);
-            tourist.deletable = Boolean.parseBoolean(cursor.getString(9));
+            tourist.deletable = (cursor.getInt(cursor.getColumnIndex(KEY_DELETABLE)) == 1);
 
             Log.d("getName(" + name + ")", tourist.toString());
         }

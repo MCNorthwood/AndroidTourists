@@ -12,52 +12,58 @@ import com.example.bg51az.comcet325bg51az.database.Tourist;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
+{
 
-    Button btnViewList, btnFavCurr, btnAbout;
-
+    Button btnViewList, btnWeather, btnAbout;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         btnViewList = (Button)findViewById(R.id.btn_viewList);
-        btnFavCurr = (Button)findViewById(R.id.btn_favCurr);
+        btnWeather = (Button)findViewById(R.id.btn_weather);
         btnAbout = (Button)findViewById(R.id.btn_about);
 
         btnViewList.setOnClickListener(this);
-        btnFavCurr.setOnClickListener(this);
+        btnWeather.setOnClickListener(this);
         btnAbout.setOnClickListener(this);
 
         Initiate();
     }
 
     @Override
-    public void onClick(View v){
+    public void onClick(View v)
+    {
         int id = v.getId();
 
         if(id == R.id.btn_viewList){
             Intent inList = new Intent(v.getContext(), ListActivity.class);
             startActivity(inList);
         }
-        else if(id == R.id.btn_favCurr){
-
+        else if(id == R.id.btn_weather){
+            Intent inWeather = new Intent(v.getContext(), WeatherActivity.class);
+            startActivity(inWeather);
         }
         else if(id == R.id.btn_about){
-
+            /*Intent inAbout = new Intent(v.getContext(), About.class);
+            startActivity(inAbout);*/
         }
         else{
 
         }
     }
 
-    public void Initiate(){
+    public void Initiate()
+    {
         DBOpenHelper db = new DBOpenHelper(this);
 
         //populate or re-populate to not duplicate data on first go for testing purposes
         List<Tourist> tourists = db.getAllTourists();
 
-        for(Tourist t: tourists){
+        for(Tourist t: tourists)
+        {
             db.deleteTourist(t);
         }
 
@@ -65,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Tourist BritishMuseum = new Tourist();
         BritishMuseum.name = "British Museum";
         BritishMuseum.location = "London, United Kingdom";
-        BritishMuseum.description= "http://www.britishmuseum.org/";
+        BritishMuseum.description= "Huge showcase for global antiquities, including Egyptian mummies and ancient Greek sculptures.";
         BritishMuseum.favourite = true; // Boolean value gets translated into Integer when added
         BritishMuseum.image = "@drawable/britmuse";
         BritishMuseum.geolocation = "51.5194133,-0.1291453";
@@ -77,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Tourist LondonDungeon = new Tourist();
         LondonDungeon.name = "London Dungeon";
         LondonDungeon.location = "London, United Kingdom";
-        LondonDungeon.description= "https://www.thedungeons.com/locations/";
+        LondonDungeon.description= "Costumed actors and themed fairground rides depicting macabre stories from London's past.";
         LondonDungeon.favourite = true;
         LondonDungeon.image = "@drawable/londondungeons";
         LondonDungeon.geolocation = "51.5025119,-0.1209515";
@@ -89,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Tourist LondonEye = new Tourist();
         LondonEye.name = "London Eye";
         LondonEye.location = "London, United Kingdom";
-        LondonEye.description= "https://www.londoneye.com/";
+        LondonEye.description= "Huge observation wheel giving passengers a view of the city's landmarks.";
         LondonEye.favourite = true;
         LondonEye.image = "@drawable/londoneye";
         LondonEye.geolocation = "51.503324,-0.1217317";
@@ -101,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Tourist LondonZoo = new Tourist();
         LondonZoo.name = "London Zoo";
         LondonZoo.location = "London, United Kingdom";
-        LondonZoo.description= "https://www.zsl.org/zsl-london-zoo";
+        LondonZoo.description= "Major city zoo and research centre helping to conserve numerous species in naturalistic habitats.";
         LondonZoo.favourite = true;
         LondonZoo.image = "@drawable/londonzoo";
         LondonZoo.geolocation = "51.5352875,-0.155619";
@@ -113,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Tourist MadameTussauds = new Tourist();
         MadameTussauds.name = "Madame Tussauds";
         MadameTussauds.location = "London, United Kingdom";
-        MadameTussauds.description= "https://www.madametussauds.com/london/en/";
+        MadameTussauds.description= "Museum chain for life-size wax replicas of famous celebrities & historic icons in themed galleries.";
         MadameTussauds.favourite = true;
         MadameTussauds.image = "@drawable/madametussauds";
         MadameTussauds.geolocation = "51.5228901,-0.1571558";
@@ -125,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Tourist NationalGallery = new Tourist();
         NationalGallery.name = "National Gallery";
         NationalGallery.location = "London, United Kingdom";
-        NationalGallery.description= "https://www.nationalgallery.org.uk/";
+        NationalGallery.description= "Trafalgar Square art museum whose masterworks trace the development of Western European painting.";
         NationalGallery.favourite = true;
         NationalGallery.image = "@drawable/nationalgallery";
         NationalGallery.geolocation = "51.508929,-0.1304877";
@@ -137,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Tourist NationalHistoryMuseum = new Tourist();
         NationalHistoryMuseum.name = "National History Museum";
         NationalHistoryMuseum.location = "London, United Kingdom";
-        NationalHistoryMuseum.description= "http://www.nhm.ac.uk/visit.html";
+        NationalHistoryMuseum.description= "Landmark museum of animals and natural phenomena, with hands-on exhibits and animatronic dinosaurs.";
         NationalHistoryMuseum.favourite = true;
         NationalHistoryMuseum.image = "@drawable/nationalhistorymuseum";
         NationalHistoryMuseum.geolocation = "51.496715,-0.1785559";
@@ -149,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Tourist ScienceMuseum = new Tourist();
         ScienceMuseum.name = "Science Museum";
         ScienceMuseum.location = "London, United Kingdom";
-        ScienceMuseum.description= "http://www.sciencemuseum.org.uk/";
+        ScienceMuseum.description= "A vast treasury of science and invention, famous for its state-of-the-art interactive exhibits.";
         ScienceMuseum.favourite = true;
         ScienceMuseum.image = "@drawable/sciencemuseum";
         ScienceMuseum.geolocation = "51.4978095,-0.1767122";
@@ -173,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Tourist TowerOfLondon= new Tourist();
         TowerOfLondon.name = "Tower Of London";
         TowerOfLondon.location = "London, United Kingdom";
-        TowerOfLondon.description= "http://www.hrp.org.uk/tower-of-london/#gs.aDD9P64";
+        TowerOfLondon.description= "Centuries of bloody history around a medieval castle, home to Crown Jewels and iconic Beefeaters.";
         TowerOfLondon.favourite = true;
         TowerOfLondon.image = "@drawable/toweroflondon";
         TowerOfLondon.geolocation = "51.5081120,-0.0759490";
@@ -193,6 +199,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db.addTourist(TowerBridge);
         db.addTourist(TowerOfLondon);
 
-        Toast.makeText(this, "Data added to Database", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Data Loaded", Toast.LENGTH_LONG).show();
     }
 }

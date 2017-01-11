@@ -10,7 +10,9 @@
         android:layout_height="74dp"
         android:id="@+id/imageIcon"
         android:src="@drawable/earth"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp"
+        android:background="@drawable/image_border"
+        android:padding="2dp"/>
 
     <TextView
         android:id="@+id/nameTextView"

@@ -1,49 +1,13 @@
 package com.example.bg51az.comcet325bg51az.convert;
 
-public class Currency {//implements Serializable {
+public class Currency
+{
     private String base;
     private String date;
+    private double favourite;
     private double GBP;
     private double EUR;
     private double USD;
-
-    public double convertCurrency(double base, double chosenCurr){
-        return base * chosenCurr;
-    }
-
-    public String getBase() {
-        return base;
-    }
-    public void setBase(String base) {
-        this.base = base;
-    }
-
-    // gets and sets the date it was retrieved
-    public String getDate() {
-        return date;
-    }
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public double getGBP() { return GBP; }
-    public void setGBP(double GBP) { this.GBP = GBP; }
-
-    //gets and set Euro and Dollars as the Base is in GBP
-    public double getEUR() {
-        return EUR;
-    }
-    public void setEUR(double EUR) {
-        this.EUR = EUR;
-    }
-
-    public double getUSD() {
-        return USD;
-    }
-    public void setUSD(double USD) {
-        this.USD = USD;
-    }
-
     private double AUD; // Australian Dollar
     private double BGN; // Bulgarian Lev
     private double BRL; // Brazilian Real
@@ -73,6 +37,46 @@ public class Currency {//implements Serializable {
     private double THB; // Thai Baht
     private double TRY; // Turkish Lira
     private double ZAR; // South African Rand
+
+    public double convertCurrency(double base, double exchange){
+        return base * exchange;
+    }
+
+    public String getBase() {
+        return base;
+    }
+    public void setBase(String base) {
+        this.base = base;
+    }
+
+    // gets and sets the date it was retrieved
+    public String getDate() {
+        return date;
+    }
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public double getFavourite() { return favourite; }
+    public void setFavourite(double favourite) { this.favourite = favourite; }
+
+    public double getGBP() { return GBP; }
+    public void setGBP(double GBP) { this.GBP = GBP; }
+
+    //gets and set Euro and Dollars as the Base is in GBP
+    public double getEUR() {
+        return EUR;
+    }
+    public void setEUR(double EUR) {
+        this.EUR = EUR;
+    }
+
+    public double getUSD() {
+        return USD;
+    }
+    public void setUSD(double USD) {
+        this.USD = USD;
+    }
 
     public double getAUD() {
         return AUD;

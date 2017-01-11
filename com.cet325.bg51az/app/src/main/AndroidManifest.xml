@@ -25,6 +25,11 @@
             android:label="Tourist List">
         </activity>
 
+        <activity
+            android:name=".WeatherActivity"
+            android:label="Weather Information">
+        </activity>
+
     </application>
 
 </manifest>
