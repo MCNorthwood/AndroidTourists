@@ -1,6 +1,7 @@
 package com.example.bg51az.comcet325bg51az.weather;
 
-public class Weather {
+public class Weather
+{
     public Location location;
     public WeatherCondition weatherConditions = new WeatherCondition();
     public Temperature temperature = new Temperature();
@@ -10,7 +11,8 @@ public class Weather {
 
     public byte[] iconData;
 
-    public class WeatherCondition {
+    public class WeatherCondition
+    {
         private int weatherId;
         private String main;
         private String desc;
@@ -62,7 +64,8 @@ public class Weather {
         }
     }
 
-    public class Temperature {
+    public class Temperature
+    {
         private float minTemp;
         private float maxTemp;
         private float temp;
@@ -89,7 +92,8 @@ public class Weather {
         }
     }
 
-    public class Wind {
+    public class Wind
+    {
         private float speed;
         private float deg;
 
@@ -108,7 +112,8 @@ public class Weather {
         }
     }
 
-    public class Clouds {
+    public class Clouds
+    {
         private int perc;
 
         public int getPerc() {
@@ -119,7 +124,8 @@ public class Weather {
         }
     }
 
-    public class Rain{
+    public class Rain
+    {
         private float amount;
 
         public float getAmount() { return amount; }

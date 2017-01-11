@@ -1,6 +1,7 @@
 package com.example.bg51az.comcet325bg51az.database;
 
-public class Tourist {
+public class Tourist
+{
     public int id;
     public String name;
     public String location;
@@ -12,11 +13,10 @@ public class Tourist {
     public int rank;
     public boolean deletable;
 
-    public Tourist() {
+    public Tourist() {}
 
-    }
-
-    public Tourist(String name, String loc, String des, boolean fav, String im, String geo, double price, int rank, boolean delete) {
+    public Tourist(String name, String loc, String des, boolean fav, String im, String geo, double price, int rank, boolean delete)
+    {
         this.name = name;
         this.location = loc;
         this.description = des;
@@ -29,7 +29,8 @@ public class Tourist {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return ("Name: " + name +
                 "\nLocation: " + location +
                 "\nDescription: " + description +

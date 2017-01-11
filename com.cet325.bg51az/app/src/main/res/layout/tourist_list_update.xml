@@ -70,6 +70,7 @@
         android:id="@+id/editUpdateTouristNotes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/notesInput"/>
+        android:hint="@string/notesInput"
+        android:maxLength="1024" />
 
 </LinearLayout>

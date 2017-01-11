@@ -4,9 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class WeatherParser {
+public class WeatherParser
+{
 
-    public static Weather getWeather(String data) throws JSONException {
+    public static Weather getWeather(String data) throws JSONException
+    {
         Weather weather = new Weather();
 
         //Create JSONObject from data passed in
@@ -60,20 +62,24 @@ public class WeatherParser {
         return weather;
     }
 
-    private static JSONObject getObject(String name, JSONObject jsonObject) throws JSONException {
+    private static JSONObject getObject(String name, JSONObject jsonObject) throws JSONException
+    {
         JSONObject getObj = jsonObject.getJSONObject(name);
         return getObj;
     }
 
-    private static String getString(String name, JSONObject jsonObject) throws JSONException {
+    private static String getString(String name, JSONObject jsonObject) throws JSONException
+    {
         return jsonObject.getString(name);
     }
 
-    private static float getFloat(String name, JSONObject jsonObject) throws JSONException {
+    private static float getFloat(String name, JSONObject jsonObject) throws JSONException
+    {
         return (float) jsonObject.getDouble(name);
     }
 
-    private static int getInt(String name, JSONObject jsonObject) throws JSONException {
+    private static int getInt(String name, JSONObject jsonObject) throws JSONException
+    {
         return jsonObject.getInt(name);
     }
 }

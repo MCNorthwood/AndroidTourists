@@ -1,8 +1,10 @@
 package com.example.bg51az.comcet325bg51az.convert;
 
-public class Currency {//implements Serializable {
+public class Currency
+{
     private String base;
     private String date;
+    private double favourite;
     private double GBP;
     private double EUR;
     private double USD;
@@ -54,6 +56,9 @@ public class Currency {//implements Serializable {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public double getFavourite() { return favourite; }
+    public void setFavourite(double favourite) { this.favourite = favourite; }
 
     public double getGBP() { return GBP; }
     public void setGBP(double GBP) { this.GBP = GBP; }

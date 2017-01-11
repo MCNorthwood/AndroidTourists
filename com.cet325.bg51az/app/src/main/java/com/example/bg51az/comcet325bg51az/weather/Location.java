@@ -2,7 +2,8 @@ package com.example.bg51az.comcet325bg51az.weather;
 
 import java.io.Serializable;
 
-public class Location implements Serializable {
+public class Location implements Serializable
+{
     private float lon;
     private float lat;
     private long sunset;

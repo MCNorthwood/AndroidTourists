@@ -19,7 +19,8 @@ import com.example.bg51az.comcet325bg51az.weather.WeatherParser;
 
 import org.json.JSONException;
 
-public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
+public class WeatherActivity extends AppCompatActivity implements View.OnClickListener
+{
     private TextView cityText;
     private TextView condDesc;
     private TextView temp;
@@ -38,7 +39,8 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     Button btnStartWeather;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
@@ -65,7 +67,8 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)
+    {
         int id = v.getId();
 
         String city = cityEdit.getText().toString();
@@ -77,25 +80,34 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    void Initialise(String city){
+    void Initialise(String city)
+    {
         JSONWeatherTask task = new JSONWeatherTask();
         task.execute(new String[]{city});
     }
 
-    private class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
+    private class JSONWeatherTask extends AsyncTask<String, Void, Weather>
+    {
         @Override
-        protected Weather doInBackground(String... params) {
+        protected Weather doInBackground(String... params)
+        {
             Weather weather = new Weather();
 
             String data = ((new WeatherHttpClient()).getWeatherData(params[0]));
-            if (data == null) {
+            if (data == null)
+            {
                 return null;
-            } else {
-                try {
+            }
+            else
+            {
+                try
+                {
                     weather = WeatherParser.getWeather(data);
                     //retrieve the icon
                     weather.iconData = new WeatherHttpClient().getImage(weather.weatherConditions.getIcon());
-                } catch (JSONException e) {
+                }
+                catch (JSONException e)
+                {
                     e.printStackTrace();
                 }
                 return weather;
@@ -103,13 +115,17 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         @Override
-        protected void onPostExecute(Weather weather) {
+        protected void onPostExecute(Weather weather)
+        {
             super.onPostExecute(weather);
-            if(weather!=null){
-                if(weather.iconData != null && weather.iconData.length > 0) {
+            if(weather!=null)
+            {
+                if(weather.iconData != null && weather.iconData.length > 0)
+                {
                     Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
 
-                    if(img != null){
+                    if(img != null)
+                    {
                         Log.d("img", img.toString());
                         imgView.setImageBitmap(img);
                     }
@@ -126,7 +142,8 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                     clouds.setText(" " + weather.clouds.getPerc() + "%");
                     //rain.setText(" " + weather.rain.getAmount() + "%");
                 }
-                else{
+                else
+                {
                     Toast.makeText(getApplicationContext(), "Unable to retrive Weather data", Toast.LENGTH_LONG).show();
                 }
             }

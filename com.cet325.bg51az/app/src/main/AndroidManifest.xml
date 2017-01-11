@@ -30,11 +30,6 @@
             android:label="Weather Information">
         </activity>
 
-        <activity
-            android:name=".CurrencyActivity"
-            android:label="Budget Planner">
-        </activity>
-
     </application>
 
 </manifest>

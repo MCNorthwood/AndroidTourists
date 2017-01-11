@@ -11,16 +11,19 @@ import android.widget.TextView;
 
 import com.example.bg51az.comcet325bg51az.R;
 
-public class TouristCursorAdapter extends CursorAdapter {
+public class TouristCursorAdapter extends CursorAdapter
+{
     public TouristCursorAdapter(Context context, Cursor cursor, int flags) { super (context, cursor, flags); }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup viewGroup){
+    public View newView(Context context, Cursor cursor, ViewGroup viewGroup)
+    {
         return LayoutInflater.from(context).inflate(R.layout.tourist_list_item,viewGroup,false);
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor){
+    public void bindView(View view, Context context, Cursor cursor)
+    {
         //Get the information
         String touristName = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_NAME));
         String touristLocation = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_LOCATION));

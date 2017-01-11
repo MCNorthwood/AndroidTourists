@@ -5,8 +5,10 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CurrencyParser {
-    public static Currency getCurrency(String data) throws JSONException {
+public class CurrencyParser
+{
+    public static Currency getCurrency(String data) throws JSONException
+    {
         Currency curr = new Currency();
 
         // create a JSON object from the data provided
@@ -57,12 +59,14 @@ public class CurrencyParser {
         return curr;
     }
 
-    private static JSONObject getObject(String name, JSONObject Obj) throws JSONException{
+    private static JSONObject getObject(String name, JSONObject Obj) throws JSONException
+    {
         JSONObject subObj = Obj.getJSONObject(name);
         return  subObj;
     }
 
-    private static double getDouble(String name, JSONObject jsonObject) throws JSONException {
+    private static double getDouble(String name, JSONObject jsonObject) throws JSONException
+    {
         return jsonObject.getDouble(name);
     }
 }
