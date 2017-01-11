@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/addTourist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="@dimen/text_size_header"
+        android:text="@string/add_tourist" />
+
+    <EditText
+        android:id="@+id/editInputTouristName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/nameInput"/>
+
+    <EditText
+        android:id="@+id/editInputTouristLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/locationInput"/>
+
+    <EditText
+        android:id="@+id/editInputTouristDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/descriptionInput"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/editInputTouristLatitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/latitudeInput"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/editInputTouristLongitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/longitudeInput"
+            android:layout_toRightOf="@+id/editInputTouristLatitude"
+            android:inputType="numberDecimal" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editInputTouristPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/priceInput"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/editInputTouristRank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/rankInput"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editInputTouristNotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/notesInput"
+        android:maxLength="1024" />
+
+</LinearLayout>
