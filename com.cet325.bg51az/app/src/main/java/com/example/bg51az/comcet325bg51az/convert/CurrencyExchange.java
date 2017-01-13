@@ -1,47 +1,97 @@
 package com.example.bg51az.comcet325bg51az.convert;
 
-public class Currency
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Currency;
+import java.util.Locale;
+
+public class CurrencyExchange
 {
     private String base;
     private String date;
+    private String fav;
     private double favourite;
-    private double GBP;
-    private double EUR;
-    private double USD;
-    private double AUD; // Australian Dollar
-    private double BGN; // Bulgarian Lev
-    private double BRL; // Brazilian Real
-    private double CAD; // Canadian Dollar
-    private double CHF; // Swiss Franc
-    private double CNY; // Chinese Yuan
-    private double CZK; // Czech Koruna
-    private double DKK; // Danish Krone
-    private double HKD; // Hong Kong Dollar
-    private double HRK; // Croatian Kuna
-    private double HUF; // Hungarian Forint
+    private double GBP; // Great British Pound £
+    private double EUR; // Euro €
+    private double USD; // United States Dollar $
+    private double AUD; // Australian Dollar $
+    private double BGN; // Bulgarian Lev лв
+    private double BRL; // Brazilian Real R$
+    private double CAD; // Canadian Dollar $
+    private double CHF; // Swiss Franc CHF
+    private double CNY; // Chinese Yuan ¥
+    private double CZK; // Czech Koruna Kč
+    private double DKK; // Danish Krone kr
+    private double HKD; // Hong Kong Dollar $
+    private double HRK; // Croatian Kuna kn
+    private double HUF; // Hungarian Forint Ft
     private double IDR; // Indonesian Rupiah
-    private double ILS; // Israeli Shekel
+    private double ILS; // Israeli Shekel ₪
     private double INR; // Indian Rupee
-    private double JPY; // Japanese Yen
-    private double KRW; // Korean Won
-    private double MXN; // Mexican Peso
-    private double MYR; // Malaysian Ringgit
-    private double NOK; // Norwegian Krone
-    private double NZD; // New Zealand Dollar
-    private double PHP; // Philippine Peso
-    private double PLN; // Polish Zloty
-    private double RON; // Romanian New Leu
-    private double RUB; // Russian Rouble
-    private double SEK; // Swedish Krona
-    private double SGD; // Singapore Dollar
-    private double THB; // Thai Baht
+    private double JPY; // Japanese Yen ¥
+    private double KRW; // Korean Won ₩
+    private double MXN; // Mexican Peso $
+    private double MYR; // Malaysian Ringgit RM
+    private double NOK; // Norwegian Krone kr
+    private double NZD; // New Zealand Dollar $
+    private double PHP; // Philippine Peso ₱
+    private double PLN; // Polish Zloty zł
+    private double RON; // Romanian New Leu lei
+    private double RUB; // Russian Rouble ₽
+    private double SEK; // Swedish Krona kr
+    private double SGD; // Singapore Dollar $
+    private double THB; // Thai Baht ฿
     private double TRY; // Turkish Lira
-    private double ZAR; // South African Rand
+    private double ZAR; // South African Rand R
 
-    public double convertCurrency(double base, double exchange){
-        return base * exchange;
+    public CurrencyExchange(){
+        setFav("EUR");
     }
 
+    public double convertCurrency(double base, double exchange){
+        double convert = base * exchange;
+        return roundDouble(convert);
+    }
+
+    public double roundDouble(double round){
+        BigDecimal bd = new BigDecimal(round);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public String getSymbol(String local){
+        Locale locale;
+        Currency curr;
+        if(local.contains("EUR")){
+            locale = Locale.FRANCE;
+            curr = Currency.getInstance(locale);
+            local = curr.getSymbol(locale);
+        }
+        if(local.contains("USD")){
+            locale = Locale.US;
+            curr = Currency.getInstance(locale);
+            local = curr.getSymbol(locale);
+        }
+        if(local.contains("JPY")){
+            locale = Locale.JAPAN;
+            curr = Currency.getInstance(locale);
+            local = curr.getSymbol(locale);
+        }
+        if(local.contains("CNY")){
+            locale = Locale.CHINA;
+            curr = Currency.getInstance(locale);
+            local = curr.getSymbol(locale);
+        }
+        if(local.contains("KRW")){
+            locale = Locale.KOREA;
+            curr = Currency.getInstance(locale);
+            local = curr.getSymbol(locale);
+        }
+
+        return local;
+    }
+
+    // gets and sets the date it was retrieved
     public String getBase() {
         return base;
     }
@@ -49,13 +99,15 @@ public class Currency
         this.base = base;
     }
 
-    // gets and sets the date it was retrieved
     public String getDate() {
         return date;
     }
     public void setDate(String date) {
         this.date = date;
     }
+
+    public String getFav() { return fav; }
+    public void setFav(String fav) { this.fav = fav; }
 
     public double getFavourite() { return favourite; }
     public void setFavourite(double favourite) { this.favourite = favourite; }

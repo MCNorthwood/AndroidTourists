@@ -10,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bg51az.comcet325bg51az.R;
+import com.example.bg51az.comcet325bg51az.convert.CurrencyExchange;
 
 public class TouristCursorAdapter extends CursorAdapter
 {
+    CurrencyExchange curr;
+
     public TouristCursorAdapter(Context context, Cursor cursor, int flags) { super (context, cursor, flags); }
 
     @Override
@@ -30,8 +33,8 @@ public class TouristCursorAdapter extends CursorAdapter
         String touristDescription = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_DESCRIPTION));
         String touristImage = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_IMAGE));
         String touristGeolocation = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_GEOLOCATION));
-        String touristPrice = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_PRICE));
-        String touristRank = cursor.getString(cursor.getColumnIndex(DBOpenHelper.KEY_RANK));
+        double touristPrice = cursor.getDouble(cursor.getColumnIndex(DBOpenHelper.KEY_PRICE));
+        int touristRank = cursor.getInt(cursor.getColumnIndex(DBOpenHelper.KEY_RANK));
 
         // Initialise TextView and ImageView
         TextView nameTextView = (TextView) view.findViewById(R.id.nameTextView);
@@ -47,7 +50,13 @@ public class TouristCursorAdapter extends CursorAdapter
         locationTextView.setText(touristLocation);
         descriptionTextView.setText(touristDescription);
         geolocationTextView.setText(touristGeolocation);
-        priceTextView.setText("£" + touristPrice);
+        if(touristPrice != 0.0 || touristPrice != 0) {
+            priceTextView.setText("£" + touristPrice);
+        }
+        else
+        {
+            priceTextView.setText("Free");
+        }
         rankTextView.setText("Rank: " + touristRank);
 
         // How to set the ImageView

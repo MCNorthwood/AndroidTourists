@@ -147,6 +147,7 @@
         android:layout_marginTop="@dimen/margin_space" />
 
     <Button
+        style="@style/ButtonColour"
         android:id="@+id/btnWeatherAPI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

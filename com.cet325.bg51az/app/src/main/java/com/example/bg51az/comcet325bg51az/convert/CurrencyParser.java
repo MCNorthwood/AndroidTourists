@@ -7,9 +7,9 @@ import org.json.JSONObject;
 
 public class CurrencyParser
 {
-    public static Currency getCurrency(String data) throws JSONException
+    public static CurrencyExchange getCurrency(String data) throws JSONException
     {
-        Currency curr = new Currency();
+        CurrencyExchange curr = new CurrencyExchange();
 
         // create a JSON object from the data provided
         JSONObject jObj = new JSONObject(data);
@@ -17,9 +17,9 @@ public class CurrencyParser
         curr.setBase(jObj.getString("base"));
         curr.setDate(jObj.getString("date"));
 
-        /*Get the exhange rate of each country and then sets the value
-         has the option to be able to change the base and not cause
-         any errors if the base was to change */
+        /*Get the exchange rate of each country and then sets the value.
+         If the option to change the base is added means that no code would
+          need to change here. */
         JSONObject rObj = getObject("rates",jObj);
         if(!curr.getBase().contains("GBP")) { curr.setGBP(getDouble("GBP", rObj)); }
         if(!curr.getBase().contains("EUR")) { curr.setEUR(getDouble("EUR", rObj)); }

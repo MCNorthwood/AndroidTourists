@@ -7,13 +7,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.SimpleTimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DBOpenHelper extends SQLiteOpenHelper
 {
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     //Database Name
     private static final String DATABASE_NAME = "TouristDB";
 
@@ -32,9 +37,12 @@ public class DBOpenHelper extends SQLiteOpenHelper
     public static final String KEY_PRICE = "price";
     public static final String KEY_RANK = "rank";
     public static final String KEY_DELETABLE = "deletable";
+    public static final String KEY_NOTES = "notes";
+    public static final String KEY_PLANNED = "planned";
+    public static final String KEY_VISITED = "visited";
 
     //Columns
-    private static final String[] COLUMNS = {KEY_ID, KEY_NAME, KEY_LOCATION, KEY_DESCRIPTION, KEY_FAVOURITE, KEY_IMAGE, KEY_GEOLOCATION, KEY_PRICE, KEY_RANK, KEY_DELETABLE};
+    private static final String[] COLUMNS = {KEY_ID, KEY_NAME, KEY_LOCATION, KEY_DESCRIPTION, KEY_FAVOURITE, KEY_IMAGE, KEY_GEOLOCATION, KEY_PRICE, KEY_RANK, KEY_DELETABLE, KEY_NOTES, KEY_PLANNED, KEY_VISITED};
 
     public DBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -55,7 +63,10 @@ public class DBOpenHelper extends SQLiteOpenHelper
                 KEY_GEOLOCATION + " TEXT, " +
                 KEY_PRICE + " DOUBLE, " +
                 KEY_RANK + " INTEGER, " +
-                KEY_DELETABLE + " INTEGER )";
+                KEY_DELETABLE + " INTEGER, " +
+                KEY_NOTES + " TEXT, " +
+                KEY_PLANNED + " TEXT, " +
+                KEY_VISITED + " TEXT )";
 
         //create tourist table
         db.execSQL(CREATE_TOURIST_TABLE);
@@ -82,6 +93,10 @@ public class DBOpenHelper extends SQLiteOpenHelper
         String n = db.getPath();
         Log.d("addTourist", n);
 
+        // Change Date to String
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String planned = sdf.format(tourist.planned);
+
         //2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, tourist.name); //get name
@@ -92,7 +107,17 @@ public class DBOpenHelper extends SQLiteOpenHelper
         values.put(KEY_GEOLOCATION, tourist.geolocation); //get geolocation
         values.put(KEY_PRICE, tourist.price); //get price
         values.put(KEY_RANK, tourist.rank); //get rank
-        values.put(KEY_DELETABLE, tourist.deletable); //get rank
+        values.put(KEY_DELETABLE, tourist.deletable); //get deletable
+        values.put(KEY_NOTES, tourist.notes); //get notes
+        if(planned != null)
+        {
+            values.put(KEY_PLANNED, planned); // get planned
+        }
+        else
+        {
+            values.put(KEY_PLANNED, ""); // If null, put empty string
+        }
+        values.put(KEY_VISITED, ""); // get visited
 
         //3. insert
         db.insert(TABLE_TOURIST, //table
@@ -123,18 +148,32 @@ public class DBOpenHelper extends SQLiteOpenHelper
         Tourist tourist = null;
         if (cursor != null && cursor.moveToFirst())
         {
-            //4. build book object
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+            //4. build tourist object
             tourist = new Tourist();
-            tourist.id = cursor.getInt(0);
-            tourist.name = cursor.getString(1);
-            tourist.location = cursor.getString(2);
-            tourist.description = cursor.getString(3);
+            tourist.id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+            tourist.name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
+            tourist.location = cursor.getString(cursor.getColumnIndex(KEY_LOCATION));
+            tourist.description = cursor.getString(cursor.getColumnIndex(KEY_DESCRIPTION));
             tourist.favourite = (cursor.getInt(cursor.getColumnIndex(KEY_FAVOURITE)) == 1);
-            tourist.image = cursor.getString(5);
-            tourist.geolocation = cursor.getString(6);
-            tourist.price = cursor.getDouble(7);
-            tourist.rank = cursor.getInt(8);
+            tourist.image = cursor.getString(cursor.getColumnIndex(KEY_IMAGE));
+            tourist.geolocation = cursor.getString(cursor.getColumnIndex(KEY_GEOLOCATION));
+            tourist.price = cursor.getDouble(cursor.getColumnIndex(KEY_PRICE));
+            tourist.rank = cursor.getInt(cursor.getColumnIndex(KEY_RANK));
             tourist.deletable = (cursor.getInt(cursor.getColumnIndex(KEY_DELETABLE)) == 1);
+            tourist.notes = cursor.getString(cursor.getColumnIndex(KEY_NOTES));
+            try
+            {
+                tourist.planned = sdf.parse(cursor.getString(cursor.getColumnIndex(KEY_PLANNED)));
+                tourist.visited = sdf.parse(cursor.getString(cursor.getColumnIndex(KEY_VISITED)));
+            }
+            catch (ParseException e)
+            {
+                Log.e("DateParse", "Failed parse", e);
+                String Planned = cursor.getString(cursor.getColumnIndex(KEY_PLANNED));
+                String Visited = cursor.getString(cursor.getColumnIndex(KEY_VISITED));
+            }
 
             Log.d("getTourist(" + id + ")", tourist.toString());
         }
@@ -160,17 +199,32 @@ public class DBOpenHelper extends SQLiteOpenHelper
         {
             do
             {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+                //4. build tourist object
                 tourist = new Tourist();
-                tourist.id = cursor.getInt(0);
-                tourist.name = cursor.getString(1);
-                tourist.location = cursor.getString(2);
-                tourist.description = cursor.getString(3);
+                tourist.id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+                tourist.name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
+                tourist.location = cursor.getString(cursor.getColumnIndex(KEY_LOCATION));
+                tourist.description = cursor.getString(cursor.getColumnIndex(KEY_DESCRIPTION));
                 tourist.favourite = (cursor.getInt(cursor.getColumnIndex(KEY_FAVOURITE)) == 1);
-                tourist.image = cursor.getString(5);
-                tourist.geolocation = cursor.getString(6);
-                tourist.price = cursor.getDouble(7);
-                tourist.rank = cursor.getInt(8);
+                tourist.image = cursor.getString(cursor.getColumnIndex(KEY_IMAGE));
+                tourist.geolocation = cursor.getString(cursor.getColumnIndex(KEY_GEOLOCATION));
+                tourist.price = cursor.getDouble(cursor.getColumnIndex(KEY_PRICE));
+                tourist.rank = cursor.getInt(cursor.getColumnIndex(KEY_RANK));
                 tourist.deletable = (cursor.getInt(cursor.getColumnIndex(KEY_DELETABLE)) == 1);
+                tourist.notes = cursor.getString(cursor.getColumnIndex(KEY_NOTES));
+                try
+                {
+                    tourist.planned = sdf.parse(cursor.getString(cursor.getColumnIndex(KEY_PLANNED)));
+                    tourist.visited = sdf.parse(cursor.getString(cursor.getColumnIndex(KEY_VISITED)));
+                }
+                catch (ParseException e)
+                {
+                    Log.e("DateParse", "Failed parse", e);
+                    String Planned = cursor.getString(cursor.getColumnIndex(KEY_PLANNED));
+                    String Visited = cursor.getString(cursor.getColumnIndex(KEY_VISITED));
+                }
 
                 //Add tourist to tourists
                 tourists.add(tourist);
@@ -189,6 +243,11 @@ public class DBOpenHelper extends SQLiteOpenHelper
         //1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
+        // Change Date to String
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String planned = sdf.format(tourist.planned);
+        String visited = sdf.format(tourist.visited);
+
         //2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, tourist.name); //get name
@@ -199,7 +258,24 @@ public class DBOpenHelper extends SQLiteOpenHelper
         values.put(KEY_GEOLOCATION, tourist.geolocation); //get geolocation
         values.put(KEY_PRICE, tourist.price); //get price
         values.put(KEY_RANK, tourist.rank); //get rank
-        values.put(KEY_DELETABLE, tourist.deletable); //get rank
+        values.put(KEY_DELETABLE, tourist.deletable); //get deletable
+        values.put(KEY_NOTES, tourist.notes); //get notes
+        if(planned != null)
+        {
+            values.put(KEY_PLANNED, planned); // get planned
+        }
+        else
+        {
+            values.put(KEY_PLANNED, "");
+        }
+        if(visited != null)
+        {
+            values.put(KEY_VISITED, visited); // get visited
+        }
+        else
+        {
+            values.put(KEY_VISITED, "");
+        }
 
         //3. updating row
         int i = db.update(TABLE_TOURIST, //table
@@ -250,18 +326,32 @@ public class DBOpenHelper extends SQLiteOpenHelper
         Tourist tourist = null;
         if (cursor != null && cursor.moveToFirst())
         {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
             //4. build tourist object
             tourist = new Tourist();
-            tourist.id = cursor.getInt(0);
-            tourist.name = cursor.getString(1);
-            tourist.location = cursor.getString(2);
-            tourist.description = cursor.getString(3);
+            tourist.id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+            tourist.name = cursor.getString(cursor.getColumnIndex(KEY_NAME));
+            tourist.location = cursor.getString(cursor.getColumnIndex(KEY_LOCATION));
+            tourist.description = cursor.getString(cursor.getColumnIndex(KEY_DESCRIPTION));
             tourist.favourite = (cursor.getInt(cursor.getColumnIndex(KEY_FAVOURITE)) == 1);
-            tourist.image = cursor.getString(5);
-            tourist.geolocation = cursor.getString(6);
-            tourist.price = cursor.getDouble(7);
-            tourist.rank = cursor.getInt(8);
+            tourist.image = cursor.getString(cursor.getColumnIndex(KEY_IMAGE));
+            tourist.geolocation = cursor.getString(cursor.getColumnIndex(KEY_GEOLOCATION));
+            tourist.price = cursor.getDouble(cursor.getColumnIndex(KEY_PRICE));
+            tourist.rank = cursor.getInt(cursor.getColumnIndex(KEY_RANK));
             tourist.deletable = (cursor.getInt(cursor.getColumnIndex(KEY_DELETABLE)) == 1);
+            tourist.notes = cursor.getString(cursor.getColumnIndex(KEY_NOTES));
+            try
+            {
+                tourist.planned = sdf.parse(cursor.getString(cursor.getColumnIndex(KEY_PLANNED)));
+                tourist.visited = sdf.parse(cursor.getString(cursor.getColumnIndex(KEY_VISITED)));
+            }
+            catch (ParseException e)
+            {
+                Log.e("DateParse", "Failed parse", e);
+                String Planned = cursor.getString(cursor.getColumnIndex(KEY_PLANNED));
+                String Visited = cursor.getString(cursor.getColumnIndex(KEY_VISITED));
+            }
 
             Log.d("getName(" + name + ")", tourist.toString());
         }

@@ -6,10 +6,9 @@
     <string name="btn_currency">Currency</string>
     <string name="btn_about">About</string>
 
-    <string name="fav_Currency">Favourite Currency</string>
-    <string name="delete_location">Delete Location</string>
     <string name="add_tourist">Add Tourist Information</string>
     <string name="update_tourist">Update Tourist Information</string>
+    <string name="detail_location">Detail View</string>
 
     <string name="pressure">Pressure</string>
     <string name="humidity">Humidity</string>
@@ -23,11 +22,29 @@
 
     <string name="nameInput">Tourist Name:</string>
     <string name="locationInput">Tourist Location:</string>
+    <string name="locationCityInput">Tourist City:</string>
+    <string name="locationCountryInput">Tourist Country:</string>
     <string name="descriptionInput">Tourist Description:</string>
-    <string name="latitudeInput">"Tourist Latitude:     "</string>
+    <string name="geolocationInput">Tourist Geolocation:</string>
+    <string name="latitudeInput">Tourist Latitude:</string>
     <string name="longitudeInput">Tourist Longitude:</string>
     <string name="favouriteInput">Tourist Favourite:</string>
     <string name="priceInput">Tourist Price:</string>
     <string name="rankInput">Tourist Rank:</string>
     <string name="notesInput">Tourist Notes:</string>
+    <string name="plannedInput">Tourist Planned:</string>
+    <string name="visitedInput">Tourist Visited:</string>
+
+    <string name="order_by">Order Modes</string>
+    <string name="order_all">All</string>
+    <string name="order_fav">Favourite</string>
+    <string name="order_planned">Planned</string>
+    <string name="order_visited">Visited</string>
+
+    <string name="fav_Currency">Favourite Currency</string>
+    <string name="euro">EUR</string>
+    <string name="usDollar">USD</string>
+    <string name="japanYen">JPY</string>
+    <string name="chinaYuan">CNY</string>
+    <string name="koreaWon">KRW</string>
 </resources>
