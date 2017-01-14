@@ -9,11 +9,9 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.SimpleTimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DBOpenHelper extends SQLiteOpenHelper
 {
@@ -235,6 +233,29 @@ public class DBOpenHelper extends SQLiteOpenHelper
         cursor.close();
         //return tourists
         return tourists;
+    }
+
+    public List<String> getAllLocations(){
+        List<String> locations = new ArrayList<String>();
+
+        // Query
+        String query = "SELECT DISTINCT " + KEY_LOCATION + " FROM " + TABLE_TOURIST;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Loop through rows and add to list
+        if(cursor.moveToFirst()){
+            do{
+                locations.add(cursor.getString(cursor.getColumnIndex(KEY_LOCATION)));
+            } while (cursor.moveToNext());
+        }
+
+        // close connection
+        cursor.close();
+        db.close();
+
+        return locations;
     }
 
     //Update single tourist

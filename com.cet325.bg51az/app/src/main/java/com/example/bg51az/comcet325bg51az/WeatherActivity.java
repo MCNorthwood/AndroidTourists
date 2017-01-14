@@ -7,17 +7,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bg51az.comcet325bg51az.database.DBOpenHelper;
 import com.example.bg51az.comcet325bg51az.weather.Weather;
 import com.example.bg51az.comcet325bg51az.weather.WeatherHttpClient;
 import com.example.bg51az.comcet325bg51az.weather.WeatherParser;
 
 import org.json.JSONException;
+
+import java.util.List;
 
 public class WeatherActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -31,10 +35,9 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     private TextView clouds;
     //private TextView rain;
 
-    private ImageView imgView;
+    Spinner spinner;
 
-    EditText cityEdit;
-    EditText countryEdit;
+    private ImageView imgView;
 
     Button btnStartWeather;
 
@@ -53,13 +56,14 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         windDeg = (TextView) findViewById(R.id.windDeg);
         clouds = (TextView) findViewById(R.id.cloudiness);
         //rain = (TextView) findViewById(R.id.rainInput);
+        spinner = (Spinner)findViewById(R.id.spinner);
 
         imgView = (ImageView) findViewById(R.id.condIcon);
-
-        cityEdit = (EditText) findViewById(R.id.editCity);
-        countryEdit = (EditText) findViewById(R.id.editCountry);
         btnStartWeather = (Button)findViewById(R.id.btnWeatherAPI);
         btnStartWeather.setOnClickListener(this);
+        //spinner.setOnItemSelectedListener(this);
+
+        spinnerUpdate();
 
         // As the default city is london, when the it's first click and onCreate will load London weather
         String city = "London, United Kingdom";
@@ -71,11 +75,8 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     {
         int id = v.getId();
 
-        String city = cityEdit.getText().toString();
-        String country = countryEdit.getText().toString();
-
         if(id == R.id.btnWeatherAPI){ // Option to change the city to anywhere in the world
-            String place = city + "," + country;
+            String place = spinner.getSelectedItem().toString();
             Initialise(place);
         }
     }
@@ -84,6 +85,23 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     {
         JSONWeatherTask task = new JSONWeatherTask();
         task.execute(new String[]{city});
+    }
+
+    void spinnerUpdate(){
+        // SQLiteOpenHelper class connecting SQLite
+        DBOpenHelper db = new DBOpenHelper(this);
+
+        // Get list of location in db
+        List<String> locations = db.getAllLocations();
+
+        // Attach to spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, locations);
+
+        // Set dropdown
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attach adapter to spinner
+        spinner.setAdapter(dataAdapter);
     }
 
     private class JSONWeatherTask extends AsyncTask<String, Void, Weather>

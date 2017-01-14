@@ -3,7 +3,7 @@
 
     <string name="btn_viewList">View Places</string>
     <string name="btn_weather">Weather</string>
-    <string name="btn_currency">Currency</string>
+    <string name="btn_initiate">Add Data to List</string>
     <string name="btn_about">About</string>
 
     <string name="add_tourist">Add Tourist Information</string>
@@ -37,6 +37,8 @@
 
     <string name="order_by">Order Modes</string>
     <string name="order_all">All</string>
+    <string name="order_name">Name</string>
+    <string name="order_location">Location</string>
     <string name="order_fav">Favourite</string>
     <string name="order_planned">Planned</string>
     <string name="order_visited">Visited</string>
@@ -47,4 +49,5 @@
     <string name="japanYen">JPY</string>
     <string name="chinaYuan">CNY</string>
     <string name="koreaWon">KRW</string>
+    <string name="dateUpdate">Last Updated</string>
 </resources>

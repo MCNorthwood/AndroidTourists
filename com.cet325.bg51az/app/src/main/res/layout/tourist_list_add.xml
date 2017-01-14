@@ -5,6 +5,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+
     <TextView
         android:id="@+id/addTourist"
         android:layout_width="wrap_content"
@@ -26,7 +27,7 @@
         android:orientation="horizontal">
         <EditText
             android:id="@+id/editInputTouristCity"
-            android:layout_width="175dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:hint="@string/locationCityInput"
             android:inputType="text" />
@@ -51,9 +52,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/text_size"
+            android:text="@string/favouriteInput" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBoxInputFav"
+            android:onClick="favClicked"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/editInputTouristLatitude"
-            android:layout_width="175dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:hint="@string/latitudeInput"
             android:inputType="numberDecimal" />

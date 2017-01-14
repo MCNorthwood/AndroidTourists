@@ -10,12 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bg51az.comcet325bg51az.R;
-import com.example.bg51az.comcet325bg51az.convert.CurrencyExchange;
 
 public class TouristCursorAdapter extends CursorAdapter
 {
-    CurrencyExchange curr;
-
     public TouristCursorAdapter(Context context, Cursor cursor, int flags) { super (context, cursor, flags); }
 
     @Override
@@ -49,7 +46,13 @@ public class TouristCursorAdapter extends CursorAdapter
         nameTextView.setText(touristName);
         locationTextView.setText(touristLocation);
         descriptionTextView.setText(touristDescription);
-        geolocationTextView.setText(touristGeolocation);
+        if(!touristGeolocation.matches("")) {
+            geolocationTextView.setText(touristGeolocation);
+        }
+        else{
+            geolocationTextView.setText("No coordinates");
+        }
+
         if(touristPrice != 0.0 || touristPrice != 0) {
             priceTextView.setText("£" + touristPrice);
         }

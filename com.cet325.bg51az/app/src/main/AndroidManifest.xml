@@ -30,6 +30,11 @@
             android:label="Weather Information">
         </activity>
 
+        <activity
+            android:name=".AboutActivity"
+            android:label="About">
+        </activity>
+
     </application>
 
 </manifest>

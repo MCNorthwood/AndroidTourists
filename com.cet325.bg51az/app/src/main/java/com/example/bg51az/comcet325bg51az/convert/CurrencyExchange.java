@@ -53,7 +53,7 @@ public class CurrencyExchange
         return roundDouble(convert);
     }
 
-    public double roundDouble(double round){
+    private double roundDouble(double round){
         BigDecimal bd = new BigDecimal(round);
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();

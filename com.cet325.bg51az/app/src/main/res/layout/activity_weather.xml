@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.bg51az.comcet325bg51az.ListActivity">
 
+    <ImageView
+        style="@style/BackgroundImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"/>
+
     <TextView
         android:id="@+id/cityText"
         android:layout_width="wrap_content"
@@ -105,6 +111,7 @@
         android:layout_toRightOf="@+id/cloud"
         android:layout_marginLeft="4dp"/>
 <!--
+
     <TextView
         android:id="@+id/rain"
         android:layout_width="wrap_content"
@@ -122,36 +129,18 @@
         android:layout_marginLeft="4dp" />
 -->
 
-    <EditText
-        android:id="@+id/editCity"
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/cloud"
-        android:layout_centerHorizontal="true"
-        android:inputType="text"
-        android:lines="1"
-        android:hint="@string/city"
-        android:layout_marginTop="@dimen/margin_space"/>
-
-    <EditText
-        android:id="@+id/editCountry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editCity"
-        android:layout_centerHorizontal="true"
-        android:inputType="text"
-        android:lines="1"
-        android:hint="@string/country"
-        android:layout_marginTop="@dimen/margin_space" />
+        android:id="@+id/spinner"/>
 
     <Button
         style="@style/ButtonColour"
         android:id="@+id/btnWeatherAPI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editCountry"
+        android:layout_below="@+id/spinner"
         android:layout_marginTop="@dimen/margin_space"
         android:layout_centerHorizontal="true"
         android:text="@string/weatherCall"/>

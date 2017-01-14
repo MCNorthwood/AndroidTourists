@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.bg51az.comcet325bg51az.list_tourists">
 
     <item android:id="@+id/orderDisplay" android:title="@string/order_by">
         <menu>
             <item android:id="@+id/orderAll" android:title="@string/order_all"/>
+            <item android:id="@+id/orderName" android:title="@string/order_name"/>
+            <item android:id="@+id/orderLocationName" android:title="@string/order_location"/>
             <item android:id="@+id/orderFav" android:title="@string/order_fav"/>
             <item android:id="@+id/orderPlanned" android:title="@string/order_planned"/>
             <item android:id="@+id/orderVisited" android:title="@string/order_visited"/>
@@ -21,6 +22,7 @@
             <item android:id="@+id/JPY" android:title="@string/japanYen"/>
             <item android:id="@+id/CNY" android:title="@string/chinaYuan"/>
             <item android:id="@+id/KRW" android:title="@string/koreaWon"/>
+            <item android:id="@+id/dateUpdate" android:title="@string/dateUpdate"/>
         </menu>
     </item>
 </menu>

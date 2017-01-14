@@ -6,6 +6,6 @@
     <dimen name="margin_left">6dp</dimen>
 
     <dimen name="text_length">200dp</dimen>
-    <dimen name="text_size">16dp</dimen>
+    <dimen name="text_size">18dp</dimen>
     <dimen name="text_size_header">20dp</dimen>
 </resources>

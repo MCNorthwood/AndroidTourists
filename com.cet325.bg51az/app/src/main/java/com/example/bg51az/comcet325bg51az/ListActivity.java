@@ -4,17 +4,18 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.Rating;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -32,6 +33,7 @@ import org.json.JSONException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ListActivity extends AppCompatActivity
 {
@@ -54,7 +56,9 @@ public class ListActivity extends AppCompatActivity
         {
             listPopulate(queryAddon); //Populate the List with a query
         }
-        catch (NullPointerException e){}
+        catch (NullPointerException e){
+            e.printStackTrace();
+        }
 
         list.setLongClickable(true);
 
@@ -69,7 +73,7 @@ public class ListActivity extends AppCompatActivity
             public void onClick(View view){
                 View getEmpIdView = _li.inflate(R.layout.tourist_list_add, null);
 
-                AlertDialog.Builder alertDiaBui = new AlertDialog.Builder(ListActivity.this);
+                final AlertDialog.Builder alertDiaBui = new AlertDialog.Builder(ListActivity.this);
                 // Set tourist_list_add.xml to alert dialog builder
                 alertDiaBui.setView(getEmpIdView);
 
@@ -77,6 +81,7 @@ public class ListActivity extends AppCompatActivity
                 final EditText locationCityInput = (EditText)getEmpIdView.findViewById(R.id.editInputTouristCity);
                 final EditText locationCountryInput = (EditText)getEmpIdView.findViewById(R.id.editInputTouristCountry);
                 final EditText descriptionInput = (EditText)getEmpIdView.findViewById(R.id.editInputTouristDescription);
+                final CheckBox checkFav = (CheckBox)getEmpIdView.findViewById(R.id.checkBoxInputFav);
                 final EditText latitudeInput = (EditText) getEmpIdView.findViewById(R.id.editInputTouristLatitude);
                 final EditText longitudeInput = (EditText) getEmpIdView.findViewById(R.id.editInputTouristLongitude);
                 final EditText priceInput = (EditText)getEmpIdView.findViewById(R.id.editInputTouristPrice);
@@ -88,19 +93,79 @@ public class ListActivity extends AppCompatActivity
                             @Override
                             public void onClick(DialogInterface dialog, int which)
                             {
-                                Tourist _tourist = new Tourist();
-                                _tourist.name = nameInput.getText().toString();
-                                _tourist.location = locationCityInput.getText().toString() + "," + locationCountryInput.getText().toString();
-                                _tourist.description = descriptionInput.getText().toString();
-                                _tourist.favourite = false;
-                                _tourist.image = "@drawable/earth";
-                                _tourist.geolocation = latitudeInput.getText().toString() + "," + longitudeInput.getText().toString();
-                                _tourist.price = Double.parseDouble(priceInput.getText().toString());
-                                _tourist.rank = (int)rankInput.getRating();
-                                _tourist.deletable = true;
+                                try {
+                                    Tourist _tourist = new Tourist();
+                                    String name = nameInput.getText().toString();
+                                    if(name.matches("")){
+                                        Toast.makeText(getApplicationContext(), "No Name was inputted", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        _tourist.name = name;
+                                    }
 
-                                insertTourist(_tourist);
+                                    String city = locationCityInput.getText().toString();
+                                    String country = locationCountryInput.getText().toString();
+                                    if(city.matches("") || country.matches(""))
+                                    {
+                                        Toast.makeText(getApplicationContext(), "No Location was inputted", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        _tourist.location = city + ", " + country;
+                                    }
 
+                                    String description = descriptionInput.getText().toString();
+                                    if(description.matches(""))
+                                    {
+                                        _tourist.description = "";
+                                    }
+                                    else
+                                    {
+                                        _tourist.description = description;
+                                    }
+
+                                    _tourist.favourite = checkFav.callOnClick();
+                                    _tourist.image = "@drawable/earth";
+
+                                    String lat = latitudeInput.getText().toString();
+                                    String lon = longitudeInput.getText().toString();
+                                    if(lat.matches("") || lon.matches(""))
+                                    {
+                                        _tourist.geolocation = "";
+                                    }
+                                    else
+                                    {
+                                        _tourist.geolocation = lat + "," + lon;
+                                    }
+
+                                    String price = priceInput.getText().toString();
+                                    if(price.matches(""))
+                                    {
+                                        _tourist.price = 0;
+                                    }
+                                    else
+                                    {
+                                        _tourist.price = Double.parseDouble(priceInput.getText().toString());
+                                    }
+
+                                    _tourist.rank = (int) rankInput.getRating();
+                                    _tourist.deletable = true;
+
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                    try {
+                                        Date date = sdf.parse("01/12/2017");
+                                        _tourist.planned = date;
+                                    } catch (ParseException e){
+                                        Log.e("DateParse", "Failed parse", e);
+                                    }
+
+                                    insertTourist(_tourist);
+                                } catch (NullPointerException e) {
+                                    Toast.makeText(getApplicationContext(),"Missing fields", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }).create().show();
                 listPopulate(queryAddon);
@@ -123,6 +188,7 @@ public class ListActivity extends AppCompatActivity
                 final TextView touristName = (TextView)getEmpIdView.findViewById(R.id.txtTouristName);
                 final TextView touristLocation = (TextView)getEmpIdView.findViewById(R.id.txtTouristLocation);
                 final TextView touristDescription = (TextView)getEmpIdView.findViewById(R.id.txtTouristDescription);
+                final RatingBar touristFav = (RatingBar)getEmpIdView.findViewById(R.id.ratingBarDisplayFav);
                 final TextView touristGeolocation = (TextView)getEmpIdView.findViewById(R.id.txtTouristName);
                 final TextView touristPrice = (TextView)getEmpIdView.findViewById(R.id.txtTouristPrice);
                 final TextView touristPriceExchange = (TextView)getEmpIdView.findViewById(R.id.txtTouristPriceExchange);
@@ -136,6 +202,9 @@ public class ListActivity extends AppCompatActivity
                 touristName.setText(_tourist.name);
                 touristLocation.setText(_tourist.location);
                 touristDescription.setText(_tourist.description);
+                if(_tourist.favourite) {
+                    touristFav.setRating(1);
+                }
                 touristGeolocation.setText(_tourist.location);
                 touristPrice.setText(" £" + Double.toString(_tourist.price));
                 if(_tourist.price != 0 || _tourist.price != 0.0)
@@ -184,7 +253,7 @@ public class ListActivity extends AppCompatActivity
                                 }
 
                                 // Pass through previous info and updated info
-                                updateTourist(_tourist, updateTourist);
+                                updateTourist(updateTourist);
                             }
                         }).create().show();
                 listPopulate(queryAddon); //Update once updated
@@ -214,6 +283,7 @@ public class ListActivity extends AppCompatActivity
                 final EditText locationCityUpdate = (EditText)getEmpIdView.findViewById(R.id.editUpdateTouristCity);
                 final EditText locationCountryUpdate = (EditText)getEmpIdView.findViewById(R.id.editUpdateTouristCountry);
                 final EditText descriptionUpdate = (EditText)getEmpIdView.findViewById(R.id.editUpdateTouristDescription);
+                final CheckBox favCheck = (CheckBox)getEmpIdView.findViewById(R.id.checkBoxUpdateFav);
                 final EditText latitudeUpdate = (EditText) getEmpIdView.findViewById(R.id.editUpdateTouristLatitude);
                 final EditText longitudeUpdate = (EditText) getEmpIdView.findViewById(R.id.editUpdateTouristLongitude);
                 final EditText priceUpdate = (EditText)getEmpIdView.findViewById(R.id.editUpdateTouristPrice);
@@ -224,10 +294,17 @@ public class ListActivity extends AppCompatActivity
                 String[] locationArray = _tourist.location.split(",");
                 locationCityUpdate.setText(locationArray[0]);
                 locationCountryUpdate.setText(locationArray[1]);
-                descriptionUpdate.setText(_tourist.description);
+                if(!_tourist.description.matches("")) {
+                    descriptionUpdate.setText(_tourist.description);
+                }
+                if(_tourist.favourite) {
+                    favCheck.setChecked(_tourist.favourite);
+                }
                 String[] geoLoc = _tourist.geolocation.split(",");
-                latitudeUpdate.setText(geoLoc[0]);
-                longitudeUpdate.setText(geoLoc[1]);
+                if(!_tourist.geolocation.matches("")) {
+                    latitudeUpdate.setText(geoLoc[0]);
+                    longitudeUpdate.setText(geoLoc[1]);
+                }
                 priceUpdate.setText(Double.toString(_tourist.price));
                 rankUpdate.setRating(_tourist.rank);
 
@@ -243,7 +320,7 @@ public class ListActivity extends AppCompatActivity
                                 updateTourist.name = nameUpdate.getText().toString();
                                 updateTourist.location = locationCityUpdate.getText().toString() + "," + locationCountryUpdate.getText().toString();
                                 updateTourist.description = descriptionUpdate.getText().toString();
-                                updateTourist.favourite = false;
+                                updateTourist.favourite = favCheck.callOnClick();
                                 updateTourist.image = "@drawable/earth";
                                 updateTourist.geolocation = latitudeUpdate.getText().toString() + "," + longitudeUpdate.getText().toString();
                                 updateTourist.price = Double.parseDouble(priceUpdate.getText().toString());
@@ -251,7 +328,7 @@ public class ListActivity extends AppCompatActivity
                                 updateTourist.deletable = true;
 
                                 // Pass through previous info and updated info
-                                updateTourist(_tourist, updateTourist);
+                                updateTourist(updateTourist);
                             }
                         })
                         .setNegativeButton("Delete", new DialogInterface.OnClickListener()
@@ -269,10 +346,17 @@ public class ListActivity extends AppCompatActivity
                                 }
                             }
                         }).create().show();
-                listPopulate(queryAddon); //Update once deleted
                 return true;
             }
         });
+    }
+
+    public boolean favClicked(View v){
+        CheckBox checkBox = (CheckBox)v;
+        if(checkBox.isChecked()){
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -300,8 +384,11 @@ public class ListActivity extends AppCompatActivity
             case R.id.KRW:
                 favCurrency("KRW");
                 return true;
+            case R.id.dateUpdate:
+                favCurrency("date");
+                return true;
             case R.id.orderAll:
-                queryAddon = "ORDER BY NAME ASC";
+                queryAddon = "ORDER BY RANK DESC";
                 listPopulate(queryAddon);
                 return true;
             case R.id.orderFav:
@@ -313,7 +400,15 @@ public class ListActivity extends AppCompatActivity
                 listPopulate(queryAddon);
                 return true;
             case R.id.orderVisited:
-                queryAddon = "WHERE VISITED IS NOT NULL ORDER BY VISITED ASC";
+                queryAddon = "WHERE VISITED IS NOT NULL ORDER BY VISITED DESC";
+                listPopulate(queryAddon);
+                return true;
+            case R.id.orderName:
+                queryAddon = "ORDER BY NAME ASC";
+                listPopulate(queryAddon);
+                return true;
+            case R.id.orderLocationName:
+                queryAddon = "ORDER BY LOCATION DESC";
                 listPopulate(queryAddon);
                 return true;
             default:
@@ -343,6 +438,9 @@ public class ListActivity extends AppCompatActivity
             currency.setFav(favCurrency);
             currency.setFavourite(currency.getKRW());
         }
+        else if(favCurrency.contains("date")){ // Displays last time currency was updated
+            Toast.makeText(getApplicationContext(), "Currency last updated " + currency.getDate(), Toast.LENGTH_LONG).show();
+        }
         else { // A default favourite needs to be set
             currency.setFav("EUR");
             currency.setFavourite(currency.getEUR());
@@ -353,8 +451,11 @@ public class ListActivity extends AppCompatActivity
     {
         try
         {
+            Toast.makeText(getApplicationContext(), "Inserting " + _tourist.name, Toast.LENGTH_SHORT).show();
             dbOpenHelper.addTourist(_tourist);
             Toast.makeText(getApplicationContext(),"Insert Successful", Toast.LENGTH_LONG).show();
+
+            listPopulate(queryAddon); //Update once deleted
         }
         catch (Exception e){
             e.printStackTrace();
@@ -371,6 +472,9 @@ public class ListActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), "Deleting " + _tourist.name, Toast.LENGTH_SHORT).show();
                 dbOpenHelper.deleteTourist(_tourist);
                 Toast.makeText(getApplicationContext(), "Delete Successful", Toast.LENGTH_LONG).show();
+
+
+                listPopulate(queryAddon); //Update once deleted
             }
             else
             {
@@ -384,20 +488,13 @@ public class ListActivity extends AppCompatActivity
         }
     }
 
-    private void updateTourist(Tourist _tourist, Tourist updateTourist)
+    private void updateTourist( Tourist updateTourist)
     {
         try
         {
-            /*if (_tourist.deletable) // Check previous info to see whether it can be deleted
-            {*/
-                Toast.makeText(getApplicationContext(), "Updating " + updateTourist.name, Toast.LENGTH_SHORT).show();
-                dbOpenHelper.updateTourist(updateTourist);
-                Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_LONG).show();
-            /*}
-            else
-            {
-                Toast.makeText(getApplicationContext(), "This item is not updatable", Toast.LENGTH_LONG).show();
-            }*/
+            Toast.makeText(getApplicationContext(), "Updating " + updateTourist.name, Toast.LENGTH_SHORT).show();
+            dbOpenHelper.updateTourist(updateTourist);
+            Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_LONG).show();
         }
         catch (Exception e)
         {

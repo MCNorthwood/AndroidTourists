@@ -9,7 +9,6 @@
         style="@style/BackgroundImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/imageLondon"
         android:layout_alignParentTop="true"/>
 
         <LinearLayout
@@ -49,6 +48,5 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
                 android:layout_marginRight="@dimen/activity_vertical_margin"/>
-
         </LinearLayout>
 </RelativeLayout>
